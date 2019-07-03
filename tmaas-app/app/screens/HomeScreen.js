@@ -11,6 +11,11 @@ class HomeScreen extends Component {
         this.state = {
             comment: "",
             status: "",
+            problem: "",
+            street: "",
+            number: "",
+            city: "",
+            category: "",
         }
     }
 
@@ -34,8 +39,8 @@ class HomeScreen extends Component {
         }
         
         await fetch(url, {
-            method: 'POST', // or 'PUT'
-            body: JSON.stringify(data), // data can be `string` or {object}!
+            method: 'POST',
+            body: JSON.stringify(data),
             headers:{
             'Content-Type': 'application/json'
             }
@@ -44,47 +49,102 @@ class HomeScreen extends Component {
         .then(async(response) => await this.setState({
             status: response
         }))
-        .then(console.log(this.state.status))
+        .then(console.log(this.state.problem))
         .catch(error => console.error('Error:', error))
     }
 
     render() {
 
-        let data = [{
-            value: 'Hole in footpath',
-          }, {
-            value: 'Hole in bicycle path',
-          }, {
-            value: 'Damaged footpath',
-          },{
-            value: 'Damaged bicycle path',
-          },{
-            value: 'Unclear marking pedestrian crossing',
-          },{
-            value: 'Unclear marking bicycle path',
-          },{
-            value: 'Snow, frost, slipperiness',
-          },{
-            value: 'Damaged footpath',
-          },{
-            value: 'Damaged footpath',
-          },{
-            value: 'Damaged footpath',
-          },{
-            value: 'Damaged footpath',
-          },{
-            value: 'Damaged footpath',
-          },{
-            value: 'Damaged footpath',
-          },{
-            value: 'Damaged footpath',
-          },{
-            value: 'Damaged footpath',
-          },{
-            value: 'Damaged footpath',
-          },{
-            value: 'Damaged footpath',
-          },];
+        let categories = [{
+            value: 'Bicycle path/footpath',
+            }, {
+            value: 'Signalisation',
+            }, {
+            value: 'Bicycle rack',
+            },{
+            value: 'Cycling infrastructure',
+            },{
+            value: 'Other',
+            },];
+
+        let events = []
+
+        switch(this.state.category) {
+
+            case 'Bicycle path/footpath':
+                events = [{
+                    value: 'Hole in footpath',
+                    }, {
+                    value: 'Hole in bicycle path',
+                    }, {
+                    value: 'Damaged footpath',
+                    },{
+                    value: 'Damaged bicycle path',
+                    },{
+                    value: 'Unclear marking pedestrian crossing',
+                    },{
+                    value: 'Unclear marking bicycle path',
+                    },{
+                    value: 'Snow, frost, slipperiness',
+                    },{
+                    value: 'Glass ',
+                    },{
+                    value: 'Blocked guiding lines for blind people',
+                    },];
+                break;
+            
+            case 'Signalisation':
+                events = [{
+                    value: 'Sign gone/moved',
+                    }, {
+                    value: 'Traffic light defect',
+                    }, {
+                    value: 'Traffic light button defect',
+                    },{
+                    value: 'Problem with VMS sign',
+                    },{
+                    value: 'Bicycle counter defect',
+                    },];
+                break;
+        
+            case 'Bicycle rack':
+                events = [{
+                    value: 'Always full',
+                    }, {
+                    value: 'In need of reparation',
+                    }, {
+                    value: 'Weed / trash',
+                    },{
+                    value: 'Left bicycles',
+                    },{
+                    value: 'Suggestion for sheltered/indoor bicycle rack',
+                    },];
+                break;
+        
+            case 'Cycling infrastructure':
+                events = [{
+                    value: 'Broken cycling pump',
+                    }, {
+                    value: 'Broken/empty cycling lights vending machine',
+                    }, {
+                    value: 'Broken repair machine',
+                    },];
+                break;
+
+            case 'Other':
+                events = [{
+                    value: 'Unaccessible footpath for wheelchairs',
+                    }, {
+                    value: 'Dangerous crossing for cyclists/pedestrians',
+                    }, {
+                    value: 'Dangerous situation for cyclists/pedestrians',
+                    },];
+                break;
+        
+            default:
+                events = []
+            
+            }
 
         return (
             <View style={styles.container}>
@@ -93,13 +153,22 @@ class HomeScreen extends Component {
                 </View>
 
                 <KeyboardAvoidingView style={{flex: 1, margin: 2, padding:2}} behavior="padding" enabled keyboardVerticalOffset={0}> 
-                    <ScrollView>
+                    <ScrollView style={{flex: 1}}>
                         <View style={styles.commentContainer}>
+                            <Text style={styles.label}>Problem</Text>
                             <Dropdown
+                                onChangeText={(value) => this.setState({category: value})}
                                 baseColor={"#0A0A0A"}
                                 labelFontSize={18}
-                                label='Problem'
-                                data={data}
+                                label='Category'
+                                data={categories}
+                            />
+                            <Dropdown
+                                onChangeText={(value) => this.setState({problem: value})}
+                                baseColor={"#0A0A0A"}
+                                labelFontSize={18}
+                                label='Event'
+                                data={events}
                             />
                         </View>
 
@@ -115,6 +184,7 @@ class HomeScreen extends Component {
                                     style={styles.streetInput}
                                 />
                                 <TextInput
+                                    keyboardType={"numeric"} 
                                     placeholder = {"Number"}
                                     onChangeText={(number) => this.setState({number})}
                                     value={this.state.number}
@@ -159,9 +229,12 @@ class HomeScreen extends Component {
 }
 
 const styles = EStyleSheet.create({
+
     container: {
         flex: 1,
         flexDirection: 'column',
+        backgroundColor: 'white',
+        color: '#0F0F0F'
     },
     header: {
         flexDirection: 'row',
@@ -169,7 +242,7 @@ const styles = EStyleSheet.create({
         justifyContent: 'space-around',
         width: '100%',
         height: '12%',
-        backgroundColor: '#96D7AC'
+        backgroundColor: '#70D090'
     },
     commentContainer: {
         paddingTop: '4%',
@@ -181,50 +254,55 @@ const styles = EStyleSheet.create({
     },
     heading: {
         paddingTop: '7%',
-        fontSize: 20,
+        fontSize: 24,
+        fontWeight: "700",
+        color: 'white'
     },
     textInput: {
         marginTop: 6,
         borderBottomWidth: 0.4,
         borderColor: '#0A0A0A',
         borderRadius: 6,
-        height: 60,
+        height: 40,
         width: '100%',
-        padding: 6,
-        fontSize: 18,
+        paddingBottom: 6,
+        fontSize: 16,
     },
     streetInput: {
         borderBottomWidth: 0.4,
         borderColor: '#0A0A0A',
         borderRadius: 6,
-        height: 60,
+        height: 40,
         width: '74%',
-        padding: 6,
-        fontSize: 18,
+        paddingBottom: 6,
+        fontSize: 16,
     },
     numberInput: {
         borderBottomWidth: 0.4,
         borderColor: '#0A0A0A',
         borderRadius: 6,
-        height: 60,
+        height: 40,
         width: '24%',
-        padding: 6,
-        fontSize: 18,
+        paddingBottom: 6,
+        fontSize: 16,
     },
     submitButton: {
         width: '90%',
         height: 60,
         borderRadius: 6,
-        backgroundColor: '#96D7AC', 
+        backgroundColor: '#70D090', 
         alignItems: 'center',
         justifyContent: 'space-around',
         alignSelf: 'center',
     },
     buttonText: {
-        fontSize: 18,
+        fontSize: 24,
+        fontWeight: "700",
+        color: 'white'
     },
     label: {
-        fontSize: 18, 
+        fontSize: 20, 
+        fontWeight: "700"
     }
 
 });
