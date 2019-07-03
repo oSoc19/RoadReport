@@ -4,6 +4,7 @@ import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollVi
 //modules
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { Dropdown } from 'react-native-material-dropdown';
+import {Actions} from 'react-native-router-flux'
 
 class HomeScreen extends Component {
     constructor(props) {
@@ -49,7 +50,8 @@ class HomeScreen extends Component {
         .then(async(response) => await this.setState({
             status: response
         }))
-        .then(console.log(this.state.problem))
+        .then(console.log(this.state.status))
+        .then(Actions.completed())
         .catch(error => console.error('Error:', error))
     }
 

@@ -4,6 +4,7 @@ import {Router, Scene} from 'react-native-router-flux'
 
 //Local imports
 import HomeScreen from '../../screens/HomeScreen'
+import CompletionScreen from '../../screens/CompletionScreen'
 
 export default class Routes extends Component {
 	constructor(props){
@@ -17,6 +18,7 @@ export default class Routes extends Component {
             <Router>
                 <Scene key="root" hideNavBar>
                     <Scene key="home" component={HomeScreen} title="Home" initial={true} />
+                    <Scene key="completed" component={CompletionScreen} title="Completed" />
                 </Scene>
             </Router>
         )
