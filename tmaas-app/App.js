@@ -1,19 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import Main from './app/Main.js';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
+import EStyleSheet from 'react-native-extended-stylesheet';
+
+export default class App extends React.Component {
+  render() {
+    return (
+      <Main/>
+    );
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+EStyleSheet.build({ // always call EStyleSheet.build() even if you don't use global variables!
+  $textColor: '#0275d8'
 });
