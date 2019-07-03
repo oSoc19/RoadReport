@@ -3,6 +3,7 @@ import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollVi
 
 //modules
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { Dropdown } from 'react-native-material-dropdown';
 
 class HomeScreen extends Component {
     constructor(props) {
@@ -48,6 +49,43 @@ class HomeScreen extends Component {
     }
 
     render() {
+
+        let data = [{
+            value: 'Hole in footpath',
+          }, {
+            value: 'Hole in bicycle path',
+          }, {
+            value: 'Damaged footpath',
+          },{
+            value: 'Damaged bicycle path',
+          },{
+            value: 'Unclear marking pedestrian crossing',
+          },{
+            value: 'Unclear marking bicycle path',
+          },{
+            value: 'Snow, frost, slipperiness',
+          },{
+            value: 'Damaged footpath',
+          },{
+            value: 'Damaged footpath',
+          },{
+            value: 'Damaged footpath',
+          },{
+            value: 'Damaged footpath',
+          },{
+            value: 'Damaged footpath',
+          },{
+            value: 'Damaged footpath',
+          },{
+            value: 'Damaged footpath',
+          },{
+            value: 'Damaged footpath',
+          },{
+            value: 'Damaged footpath',
+          },{
+            value: 'Damaged footpath',
+          },];
+
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
@@ -57,14 +95,11 @@ class HomeScreen extends Component {
                 <KeyboardAvoidingView style={{flex: 1, margin: 2, padding:2}} behavior="padding" enabled keyboardVerticalOffset={0}> 
                     <ScrollView>
                         <View style={styles.commentContainer}>
-                            <Text style={styles.label}>Problem</Text>
-                            <TextInput
-                                placeholder = {"Problem"}
-                                onChangeText={(problem) => this.setState({problem})}
-                                value={this.state.problem}
-                                editable = {true}
-                                maxLength = {255}
-                                style={styles.textInput}
+                            <Dropdown
+                                baseColor={"#0A0A0A"}
+                                labelFontSize={18}
+                                label='Problem'
+                                data={data}
                             />
                         </View>
 
@@ -150,8 +185,8 @@ const styles = EStyleSheet.create({
     },
     textInput: {
         marginTop: 6,
-        borderWidth: 1,
-        borderColor: '#BFBFBF',
+        borderBottomWidth: 0.4,
+        borderColor: '#0A0A0A',
         borderRadius: 6,
         height: 60,
         width: '100%',
@@ -159,8 +194,8 @@ const styles = EStyleSheet.create({
         fontSize: 18,
     },
     streetInput: {
-        borderWidth: 1,
-        borderColor: '#BFBFBF',
+        borderBottomWidth: 0.4,
+        borderColor: '#0A0A0A',
         borderRadius: 6,
         height: 60,
         width: '74%',
@@ -168,8 +203,8 @@ const styles = EStyleSheet.create({
         fontSize: 18,
     },
     numberInput: {
-        borderWidth: 1,
-        borderColor: '#BFBFBF',
+        borderBottomWidth: 0.4,
+        borderColor: '#0A0A0A',
         borderRadius: 6,
         height: 60,
         width: '24%',
