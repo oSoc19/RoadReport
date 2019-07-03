@@ -39,7 +39,7 @@ class HomeScreen extends Component {
             }
         }
         
-        await fetch(url, {
+        /*await fetch(url, {
             method: 'POST',
             body: JSON.stringify(data),
             headers:{
@@ -51,8 +51,8 @@ class HomeScreen extends Component {
             status: response
         }))
         .then(console.log(this.state.status))
-        .then(Actions.completed())
-        .catch(error => console.error('Error:', error))
+        .catch(error => console.error('Error:', error))*/
+        Actions.completed()
     }
 
     render() {
