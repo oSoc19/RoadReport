@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView} from 'react-native'
+import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert} from 'react-native'
 
 //modules
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -23,36 +23,48 @@ class HomeScreen extends Component {
     postToApi = async() => {
         const url = "https://tmaas.m-leroy.pro/problem/send"
 
-        var data = {
-            "report": {
-                "problem": {
-                    "content": this.state.problem
-                },
-                "comment": {
-                    "content": this.state.comment,
-                },
-                "location": {
-                    "street": this.state.street,
-                    "number": this.state.number,
-                    "city": this.state.city,
-                },
-            }
+        if(this.state.problem == "" || this.state.street == "" || this.state.city == "" || this.state.street == "") {
+            Alert.alert(
+                'Alert',
+                'Please fill in the required fields.',
+                [
+                  {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                  },
+                ],
+                {cancelable: false},
+              );
         }
-        
-        /*await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers:{
-            'Content-Type': 'application/json'
+        else {
+            var data = {
+                "report": {
+                    "problem": this.state.problem,
+                    "comment": this.state.comment,
+                    "location": {
+                        "street": this.state.street,
+                        "number": this.state.number,
+                        "city": this.state.city,
+                    },
+                }
             }
-        })
-        .then(res => res.json())
-        .then(async(response) => await this.setState({
-            status: response
-        }))
-        .then(console.log(this.state.status))
-        .catch(error => console.error('Error:', error))*/
-        Actions.completed()
+            
+            await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers:{
+                'Content-Type': 'application/json'
+                }
+            })
+            .then(res => res.json())
+            .then(async(response) => await this.setState({
+                status: response
+            }))
+            .then(console.log(this.state.status))
+            .catch(error => console.error('Error:', error))
+            Actions.completed()
+        }
     }
 
     render() {
