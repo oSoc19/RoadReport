@@ -269,7 +269,6 @@ const styles = EStyleSheet.create({
     heading: {
         paddingTop: '7%',
         fontSize: 24,
-        fontWeight: "700",
         color: 'white'
     },
     textInput: {
@@ -311,12 +310,10 @@ const styles = EStyleSheet.create({
     },
     buttonText: {
         fontSize: 24,
-        fontWeight: "700",
         color: 'white'
     },
     label: {
         fontSize: 20, 
-        fontWeight: "700"
     }
 
 });
