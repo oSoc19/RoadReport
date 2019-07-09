@@ -46,7 +46,6 @@ const styles = EStyleSheet.create({
     heading: {
         paddingTop: '7%',
         fontSize: 24,
-        fontWeight: "700",
         color: 'white'
     },
     textInput: {
@@ -90,13 +89,10 @@ const styles = EStyleSheet.create({
     },
     buttonText: {
         fontSize: 24,
-        fontWeight: "700",
         color: 'white'
     },
     label: {
-        fontSize: 20, 
-        fontWeight: "700"
-    },
+        fontSize: 20,     },
     gif: {
         width: '80%',
     },
@@ -108,7 +104,6 @@ const styles = EStyleSheet.create({
     },
     title: {
         fontSize: 44,
-        fontWeight: '700',
         width: '90%',
         textAlign: 'center',
         marginTop: 60,
