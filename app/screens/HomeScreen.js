@@ -166,7 +166,7 @@ class HomeScreen extends Component {
                     <Text style={styles.heading}>Report a problem</Text>
                 </View>
 
-                <KeyboardAvoidingView style={{flex: 1, margin: 2, padding:2}} behavior="padding" enabled keyboardVerticalOffset={0}> 
+                <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}> 
                     <ScrollView style={{flex: 1}}>
                         <View style={styles.commentContainer}>
                             <Text style={styles.label}>Problem</Text>
@@ -176,6 +176,7 @@ class HomeScreen extends Component {
                                 labelFontSize={18}
                                 label='Category'
                                 data={categories}
+                                itemCount={16}
                             />
                             <Dropdown
                                 onChangeText={(value) => this.setState({problem: value})}
@@ -183,6 +184,7 @@ class HomeScreen extends Component {
                                 labelFontSize={18}
                                 label='Event'
                                 data={events}
+                                itemCount={16}
                             />
                         </View>
 
@@ -248,71 +250,90 @@ const styles = EStyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: 'white',
-        color: '#0F0F0F'
+        color: '#0F0F0F',
     },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-around',
+        justifyContent: 'flex-start',
         width: '100%',
         height: '12%',
-        backgroundColor: '#70D090'
+        backgroundColor: '#2594d9',
+        paddingLeft: '5%',
     },
     commentContainer: {
-        paddingTop: '4%',
+        backgroundColor: 'white',
+        marginTop: '5%',
+        padding: '4%',
         flexDirection: 'column',
         alignSelf: 'center',
         justifyContent: 'space-between',
         width: '90%',
-        marginBottom: 20,
+        borderRadius: 6,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 0,
+        },
+        shadowOpacity: 0.10,
+        shadowRadius: 20,
+
+        elevation: 35,
     },
     heading: {
         paddingTop: '7%',
-        fontSize: 24,
-        color: 'white'
+        fontSize: 32,
+        color: 'white',
+        fontFamily: '$openSansBold',
     },
     textInput: {
         marginTop: 6,
-        borderBottomWidth: 0.4,
-        borderColor: '#0A0A0A',
+        borderBottomWidth: 0.45,
+        borderColor: '#000',
         borderRadius: 6,
         height: 40,
         width: '100%',
         paddingBottom: 6,
         fontSize: 16,
+        fontFamily: '$openSansRegular',
     },
     streetInput: {
-        borderBottomWidth: 0.4,
-        borderColor: '#0A0A0A',
+        borderBottomWidth: 0.45,
+        borderColor: '#000',
         borderRadius: 6,
         height: 40,
         width: '74%',
         paddingBottom: 6,
         fontSize: 16,
+        fontFamily: '$openSansRegular',
     },
     numberInput: {
-        borderBottomWidth: 0.4,
-        borderColor: '#0A0A0A',
+        borderBottomWidth: 0.45,
+        borderColor: '#000',
         borderRadius: 6,
         height: 40,
         width: '24%',
         paddingBottom: 6,
         fontSize: 16,
+        fontFamily: '$openSansRegular',
     },
     submitButton: {
+        marginTop: '5%',
         width: '90%',
         height: 60,
-        borderRadius: 6,
-        backgroundColor: '#70D090', 
+        borderRadius: 30,
+        backgroundColor: '#6CE077', 
         alignItems: 'center',
         justifyContent: 'space-around',
         alignSelf: 'center',
     },
     buttonText: {
         fontSize: 24,
-        color: 'white'
+        color: 'white',
+        fontFamily: '$openSansBold',
     },
     label: {
+        fontFamily: '$openSansRegular',
         fontSize: 20, 
     }
 

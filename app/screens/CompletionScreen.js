@@ -32,74 +32,36 @@ const styles = EStyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         backgroundColor: 'white',
-        color: '#0F0F0F'
-    },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        width: '100%',
-        height: '12%',
-        backgroundColor: '#70D090'
-    },
-    heading: {
-        paddingTop: '7%',
-        fontSize: 24,
-        fontWeight: "700",
-        color: 'white'
-    },
-    textInput: {
-        marginTop: 6,
-        borderBottomWidth: 0.4,
-        borderColor: '#0A0A0A',
-        borderRadius: 6,
-        height: 40,
-        width: '100%',
-        paddingBottom: 6,
-        fontSize: 16,
-    },
-    streetInput: {
-        borderBottomWidth: 0.4,
-        borderColor: '#0A0A0A',
-        borderRadius: 6,
-        height: 40,
-        width: '74%',
-        paddingBottom: 6,
-        fontSize: 16,
-    },
-    numberInput: {
-        borderBottomWidth: 0.4,
-        borderColor: '#0A0A0A',
-        borderRadius: 6,
-        height: 40,
-        width: '24%',
-        paddingBottom: 6,
-        fontSize: 16,
+        color: '#0F0F0F',
+        justifyContent: 'space-around'
     },
     submitButton: {
         width: '90%',
         height: 60,
         borderRadius: 6,
-        backgroundColor: '#70D090', 
+        backgroundColor: '#6CE077', 
         alignItems: 'center',
         justifyContent: 'space-around',
         alignSelf: 'center',
+        borderRadius: 30,
     },
     buttonText: {
         fontSize: 24,
-        color: 'white'
+        color: 'white',
+        fontFamily: '$openSansBold',
     },
     label: {
         fontSize: 20, 
     },
     gif: {
-        width: '80%',
+        height: '40%',
     },
     message: {
-        fontSize: 24,
+        fontSize: 20,
         width: '90%',
         textAlign: 'center',
         marginBottom: 40,
+        fontFamily: '$openSansRegular',
     },
 
 });
