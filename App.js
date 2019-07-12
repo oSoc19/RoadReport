@@ -12,7 +12,8 @@ export default class App extends React.Component {
   async componentDidMount() {
     await Font.loadAsync({
       'open-sans-bold': require('./app/assets/fonts/OpenSans/OpenSans-Bold.ttf'),
-      'open-sans-regular': require('./app/assets/fonts/OpenSans/OpenSans-Regular.ttf')
+      'open-sans-regular': require('./app/assets/fonts/OpenSans/OpenSans-Regular.ttf'),
+      'open-sans-semibold': require('./app/assets/fonts/OpenSans/OpenSans-SemiBold.ttf')
     });
 
     this.setState({ fontLoaded: true });
@@ -32,4 +33,5 @@ EStyleSheet.build({ // always call EStyleSheet.build() even if you don't use glo
   $textColor: '#0275d8',
   $openSansBold: 'open-sans-bold',
   $openSansRegular: 'open-sans-regular',
+  $openSansSemibold: 'open-sans-semibold',
 })

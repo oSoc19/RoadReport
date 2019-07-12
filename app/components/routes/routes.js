@@ -18,9 +18,9 @@ export default class Routes extends Component {
         return(
             <Router>
                 <Scene key="root" hideNavBar>
-                    <Scene key="welcome" component={WelcomeScreen} title="Welcome"  />
+                    <Scene key="welcome" component={WelcomeScreen} title="Welcome" initial={true} />
                     <Scene key="home" component={HomeScreen} title="Home" />
-                    <Scene key="completed" component={CompletionScreen} title="Completed" initial={true}/>
+                    <Scene key="completed" component={CompletionScreen} title="Completed" />
                 </Scene>
             </Router>
         )

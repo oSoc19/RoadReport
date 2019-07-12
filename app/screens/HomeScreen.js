@@ -253,11 +253,10 @@ const styles = EStyleSheet.create({
         color: '#0F0F0F',
     },
     header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
         width: '100%',
-        height: '12%',
+        height: '11%',
         backgroundColor: '#2594d9',
         paddingLeft: '5%',
     },
@@ -281,7 +280,7 @@ const styles = EStyleSheet.create({
         elevation: 35,
     },
     heading: {
-        paddingTop: '7%',
+        paddingBottom: 8,
         fontSize: 32,
         color: 'white',
         fontFamily: '$openSansBold',
@@ -318,11 +317,12 @@ const styles = EStyleSheet.create({
         fontFamily: '$openSansRegular',
     },
     submitButton: {
-        marginTop: '5%',
+        marginTop: 20,
         width: '90%',
         height: 60,
         borderRadius: 30,
         backgroundColor: '#6CE077', 
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-around',
         alignSelf: 'center',
@@ -333,7 +333,7 @@ const styles = EStyleSheet.create({
         fontFamily: '$openSansBold',
     },
     label: {
-        fontFamily: '$openSansRegular',
+        fontFamily: '$openSansSemibold',
         fontSize: 20, 
     }
 
