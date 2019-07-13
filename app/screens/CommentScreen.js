@@ -21,7 +21,7 @@ class CommentScreen extends Component {
     }
 
     postToApi = async() => {
-        const url = "https://tmaas.m-leroy.pro/problem/send"
+        /*const url = "https://tmaas.m-leroy.pro/problem/send"
 
         if(this.state.problem == "" || this.state.street == "" || this.state.city == "" || this.state.street == "") {
             Alert.alert(
@@ -62,9 +62,9 @@ class CommentScreen extends Component {
                 status: response
             }))
             .then(console.log(this.state.status))
-            .catch(error => console.error('Error:', error))
+            .catch(error => console.error('Error:', error))*/
             Actions.completed()
-        }
+        //}
     }
 
     render() {
@@ -167,7 +167,7 @@ class CommentScreen extends Component {
                 </View>
 
                 <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}> 
-                    <ScrollView style={{flex: 1}}>
+                    <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
 
                         <View style={styles.commentContainer}>
                             <Text style={styles.label}>Comment</Text>
@@ -182,9 +182,18 @@ class CommentScreen extends Component {
                         </View>
                     
 
-                <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
-                    <Text style={styles.buttonText}>Send</Text>
-                </TouchableOpacity>
+                        <View style={styles.bottomContainer}>
+                            <View style={styles.pagination}>
+                                <View style={styles.circel}/>
+                                <View style={styles.circel}/>
+                                <View style={styles.circel}/>
+                                <View style={styles.circel__selected}/>
+                            </View>
+
+                            <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
+                                <Text style={styles.buttonText}>Send Report</Text>
+                            </TouchableOpacity>
+                        </View>
 
                 </ScrollView>
                 </KeyboardAvoidingView>
@@ -201,6 +210,27 @@ const styles = EStyleSheet.create({
         flexDirection: 'column',
         backgroundColor: 'white',
         color: '#0F0F0F',
+    },
+    bottomContainer: {
+        flexDirection: 'column',
+    },
+    pagination: {
+        width: '20%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignSelf: 'center'
+    },
+    circel: {
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        backgroundColor: '#cfcfcf',
+    },
+    circel__selected: {
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        backgroundColor: '#6e6e6e',
     },
     header: {
         flexDirection: 'column',
@@ -268,6 +298,7 @@ const styles = EStyleSheet.create({
     },
     submitButton: {
         marginTop: 20,
+        marginBottom: 22,
         width: '90%',
         height: 60,
         borderRadius: 30,

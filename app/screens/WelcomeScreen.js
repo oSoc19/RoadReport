@@ -30,7 +30,7 @@ class WelcomeScreen extends Component {
 
     
                 <TouchableOpacity onPress={() => {Actions.home()}} style={styles.submitButton}>
-                    <Text style={styles.buttonText}>Report a problem</Text>
+                    <Text style={styles.buttonText}>Report a Problem</Text>
                 </TouchableOpacity>
 
                 <View style={{width: '70%', alignItems: 'center'}}>
