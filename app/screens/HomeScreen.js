@@ -124,7 +124,7 @@ class HomeScreen extends Component {
                 </View>
 
                 <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}> 
-                    <ScrollView style={{flex: 1}}>
+                    <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
                         <View style={styles.commentContainer}>
                             <Text style={styles.label}>Problem</Text>
                             <Dropdown
@@ -145,10 +145,18 @@ class HomeScreen extends Component {
                             />
                         </View>
                     
+                        <View style={styles.bottomContainer}>
+                            <View style={styles.pagination}>
+                                <View style={styles.circel__selected}/>
+                                <View style={styles.circel}/>
+                                <View style={styles.circel}/>
+                                <View style={styles.circel}/>
+                            </View>
 
-                        <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
-                            <Text style={styles.buttonText}>Next</Text>
-                        </TouchableOpacity>
+                            <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
+                                <Text style={styles.buttonText}>Next</Text>
+                            </TouchableOpacity>
+                        </View>
 
                     </ScrollView>
                 </KeyboardAvoidingView>
@@ -165,6 +173,28 @@ const styles = EStyleSheet.create({
         flexDirection: 'column',
         backgroundColor: 'white',
         color: '#0F0F0F',
+    },
+    bottomContainer: {
+        flexDirection: 'column',
+    },
+    pagination: {
+        marginTop: 11,
+        width: '20%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignSelf: 'center'
+    },
+    circel: {
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        backgroundColor: '#cfcfcf',
+    },
+    circel__selected: {
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        backgroundColor: '#6e6e6e',
     },
     header: {
         flexDirection: 'column',
@@ -231,7 +261,8 @@ const styles = EStyleSheet.create({
         fontFamily: '$openSansRegular',
     },
     submitButton: {
-        marginTop: 20,
+        marginTop: 11,
+        marginBottom: 22,
         width: '90%',
         height: 60,
         borderRadius: 30,

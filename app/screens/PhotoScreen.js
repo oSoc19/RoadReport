@@ -117,7 +117,7 @@ const styles = EStyleSheet.create({
     },
     submitButton: {
         marginTop: 20,
-        marginBottom: 23,
+        marginBottom: 22,
         width: '90%',
         height: 60,
         borderRadius: 30,

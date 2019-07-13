@@ -2,26 +2,47 @@ import React, { Component } from 'react'
 import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert} from 'react-native'
 
 //modules
-import EStyleSheet from 'react-native-extended-stylesheet';
-import { Dropdown } from 'react-native-material-dropdown';
+import EStyleSheet from 'react-native-extended-stylesheet'
+import { Dropdown } from 'react-native-material-dropdown'
 import {Actions} from 'react-native-router-flux'
+import MapView from 'react-native-maps'
 
 class AddressScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            comment: "",
-            status: "",
-            problem: "",
             street: "",
             number: "",
             city: "",
-            category: "",
+            region: {
+                latitude: 51.05,
+                longitude: 3.73,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+            }
         }
     }
 
     postToApi = () => {
         Actions.photo()
+    }
+
+    getLocation = () => {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                this.setState({
+                    region: {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                        latitudeDelta: 0.0032,
+                        longitudeDelta: 0.0011,
+                    }
+                }, () => {console.log(this.state.region)});
+            },
+            (error) =>
+                console.log(error),
+            { enableHighAccuracy: false, timeout: 1000, maximumAge: 1000 },
+        )
     }
 
     render() {
@@ -32,41 +53,61 @@ class AddressScreen extends Component {
                 </View>
 
                 <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}> 
-                    <ScrollView style={{flex: 1}}>
-                        <View style={styles.commentContainer}>
-                            <Text style={styles.label}>Address</Text>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
+
+                        <View style={{height: '70%'}}>
+                            <MapView
+                                style={styles.mapContainer}
+                                region={this.state.region}
+                            />
+
+                            <View style={styles.commentContainer}>
+                                <Text style={styles.label}>Address</Text>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                    <TextInput
+                                        placeholder = {"Street"}
+                                        onChangeText={(street) => this.setState({street})}
+                                        value={this.state.street}
+                                        editable = {true}
+                                        maxLength = {255}
+                                        style={styles.streetInput}
+                                    />
+                                    <TextInput
+                                        keyboardType={"numeric"} 
+                                        placeholder = {"Number"}
+                                        onChangeText={(number) => this.setState({number})}
+                                        value={this.state.number}
+                                        editable = {true}
+                                        maxLength = {255}
+                                        style={styles.numberInput}
+                                    />
+                                </View>
                                 <TextInput
-                                    placeholder = {"Street"}
-                                    onChangeText={(street) => this.setState({street})}
-                                    value={this.state.street}
+                                    placeholder = {"City"}
+                                    onChangeText={(city) => this.setState({city})}
+                                    value={this.state.city}
                                     editable = {true}
                                     maxLength = {255}
-                                    style={styles.streetInput}
-                                />
-                                <TextInput
-                                    keyboardType={"numeric"} 
-                                    placeholder = {"Number"}
-                                    onChangeText={(number) => this.setState({number})}
-                                    value={this.state.number}
-                                    editable = {true}
-                                    maxLength = {255}
-                                    style={styles.numberInput}
+                                    style={styles.textInput}
                                 />
                             </View>
-                            <TextInput
-                                placeholder = {"City"}
-                                onChangeText={(city) => this.setState({city})}
-                                value={this.state.city}
-                                editable = {true}
-                                maxLength = {255}
-                                style={styles.textInput}
-                            />
+                            <TouchableOpacity style={styles.locationButton} onPress={this.getLocation}>
+                                <Text style={styles.buttonText}>Use Current Location</Text>
+                            </TouchableOpacity>
                         </View>
 
-                <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
-                    <Text style={styles.buttonText}>Next</Text>
-                </TouchableOpacity>
+                        <View style={styles.bottomContainer}>
+                            <View style={styles.pagination}>
+                                <View style={styles.circel}/>
+                                <View style={styles.circel__selected}/>
+                                <View style={styles.circel}/>
+                                <View style={styles.circel}/>
+                            </View>
+
+                            <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
+                                <Text style={styles.buttonText}>Next</Text>
+                            </TouchableOpacity>
+                        </View>
 
                 </ScrollView>
                 </KeyboardAvoidingView>
@@ -83,6 +124,28 @@ const styles = EStyleSheet.create({
         flexDirection: 'column',
         backgroundColor: 'white',
         color: '#0F0F0F',
+    },
+    bottomContainer: {
+        flexDirection: 'column',
+    },
+    pagination: {
+        marginTop: 11,
+        width: '20%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignSelf: 'center'
+    },
+    circel: {
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        backgroundColor: '#cfcfcf',
+    },
+    circel__selected: {
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        backgroundColor: '#6e6e6e',
     },
     header: {
         flexDirection: 'column',
@@ -111,9 +174,28 @@ const styles = EStyleSheet.create({
 
         elevation: 35,
     },
+    mapContainer: {
+        backgroundColor: 'white',
+        marginTop: '5%',
+        flexDirection: 'column',
+        alignSelf: 'center',
+        justifyContent: 'space-between',
+        width: '90%',
+        height: '50%',
+        borderRadius: 6,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 0,
+        },
+        shadowOpacity: 0.10,
+        shadowRadius: 20,
+
+        elevation: 35,
+    },
     heading: {
         paddingBottom: 8,
-        fontSize: 32,
+        fontSize: 28,
         color: 'white',
         fontFamily: '$openSansBold',
     },
@@ -149,11 +231,24 @@ const styles = EStyleSheet.create({
         fontFamily: '$openSansRegular',
     },
     submitButton: {
-        marginTop: 20,
+        marginTop: 11,
+        marginBottom: 22,
         width: '90%',
         height: 60,
         borderRadius: 30,
         backgroundColor: '#6CE077', 
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        alignSelf: 'center',
+    },
+    locationButton: {
+        marginTop: 11,
+        marginBottom: 22,
+        width: '90%',
+        height: 60,
+        borderRadius: 6,
+        backgroundColor: '#2594d9', 
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-around',
