@@ -14,7 +14,9 @@
   },
   "dependencies": {
     "expo": "^33.0.0",
+    "expo-camera": "~5.0.1",
     "expo-font": "~5.0.1",
+    "lottie-react-native": "^3.0.1",
     "react": "16.8.3",
     "react-dom": "^16.8.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
