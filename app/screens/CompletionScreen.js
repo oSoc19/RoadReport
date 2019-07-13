@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity, Image} from 'react-native'
 //modules
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { Actions } from 'react-native-router-flux';
+import LottieView from 'lottie-react-native';
 
 class CompletionScreen extends Component {
     constructor(props) {
@@ -15,7 +16,14 @@ class CompletionScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Image resizeMode='contain' style={styles.gif} source={require('../assets/succes.gif')} />
+                <LottieView style={{
+                    zIndex: 0,
+                    }}
+                    source={require('../assets/animations/checkmark.json')} 
+                    autoPlay 
+                    loop={false}
+                    speed={0.8} 
+                />
                 <Text style={styles.message}>Thanks for reporting! We will analyse your submission and take action accordingly.</Text>
                 <TouchableOpacity  onPress={() => {Actions.welcome()}} style={styles.submitButton}>
                     <Text style={styles.buttonText}>Finish</Text>
