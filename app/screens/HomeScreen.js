@@ -225,7 +225,7 @@ const styles = EStyleSheet.create({
     },
     heading: {
         paddingBottom: 8,
-        fontSize: 32,
+        fontSize: 28,
         color: 'white',
         fontFamily: '$openSansBold',
     },

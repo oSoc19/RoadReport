@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert} from 'react-native'
+import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert, Image} from 'react-native'
 
 //modules
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Dropdown } from 'react-native-material-dropdown'
 import {Actions} from 'react-native-router-flux'
-import MapView from 'react-native-maps'
+import MapView, {Marker} from 'react-native-maps'
 
 class AddressScreen extends Component {
     constructor(props) {
@@ -14,6 +14,10 @@ class AddressScreen extends Component {
             street: "",
             number: "",
             city: "",
+            marker: {
+                latitude: 51.05,
+                longitude: 3.73,
+            },
             region: {
                 latitude: 51.05,
                 longitude: 3.73,
@@ -31,12 +35,16 @@ class AddressScreen extends Component {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.setState({
+                    marker: {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                    },
                     region: {
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude,
                         latitudeDelta: 0.0032,
                         longitudeDelta: 0.0011,
-                    }
+                    },
                 }, () => {console.log(this.state.region)});
             },
             (error) =>
@@ -44,6 +52,10 @@ class AddressScreen extends Component {
             { enableHighAccuracy: false, timeout: 1000, maximumAge: 1000 },
         )
     }
+
+    onRegionChange = (region) => {
+        console.log(region)
+      }
 
     render() {
         return (
@@ -59,7 +71,15 @@ class AddressScreen extends Component {
                             <MapView
                                 style={styles.mapContainer}
                                 region={this.state.region}
-                            />
+                                onRegionChange={this.onRegionChange}
+                            >
+                                <View style={{flex:1, width: 50, height: 50, justifyContent: 'space-around', alignItems: 'center'}}>
+                                    <Image
+                                        style={{width: 50, height: 50}}
+                                        source={require('../assets/marker.png')}
+                                    />
+                                </View>
+                            </MapView>
 
                             <View style={styles.commentContainer}>
                                 <Text style={styles.label}>Address</Text>
@@ -177,9 +197,10 @@ const styles = EStyleSheet.create({
     mapContainer: {
         backgroundColor: 'white',
         marginTop: '5%',
-        flexDirection: 'column',
+        flexDirection: 'row',
         alignSelf: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
+        alignItems: 'center',
         width: '90%',
         height: '50%',
         borderRadius: 6,
