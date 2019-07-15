@@ -31,6 +31,10 @@ class AddressScreen extends Component {
         Actions.photo()
     }
 
+    goBack = () => {
+        Actions.pop()
+    }
+
     getLocation = () => {
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -73,7 +77,7 @@ class AddressScreen extends Component {
                                 region={this.state.region}
                                 onRegionChange={this.onRegionChange}
                             >
-                                <View style={{flex:1, width: 50, height: 50, justifyContent: 'space-around', alignItems: 'center'}}>
+                                <View style={{width: 50, height: 100, justifyContent: 'space-around', alignItems: 'center', paddingBottom: 50}}>
                                     <Image
                                         style={{width: 50, height: 50}}
                                         source={require('../assets/marker.png')}
@@ -125,7 +129,7 @@ class AddressScreen extends Component {
                             </View>
 
                             <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: '5%', marginRight: '5%'}}>
-                                <TouchableOpacity style={styles.backButton} onPress={this.postToApi}>
+                                <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
                                     <Text style={styles.buttonText}>Back</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
@@ -200,9 +204,10 @@ const styles = EStyleSheet.create({
         elevation: 35,
     },
     mapContainer: {
+        flex: 1,
         backgroundColor: 'white',
         marginTop: '5%',
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignSelf: 'center',
         justifyContent: 'space-around',
         alignItems: 'center',
@@ -274,7 +279,7 @@ const styles = EStyleSheet.create({
         width: '47.5%',
         height: 60,
         borderRadius: 30,
-        backgroundColor: 'grey', 
+        backgroundColor: '#bdbdbd', 
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-around',

@@ -13,6 +13,9 @@
     ]
   },
   "dependencies": {
+    "appcenter": "^2.1.0",
+    "appcenter-analytics": "^2.1.0",
+    "appcenter-crashes": "^2.1.0",
     "expo": "^33.0.0",
     "expo-camera": "~5.0.1",
     "expo-font": "~5.0.1",
