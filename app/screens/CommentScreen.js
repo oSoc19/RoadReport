@@ -199,7 +199,7 @@ class CommentScreen extends Component {
                                     <Text style={styles.buttonText}>Back</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
-                                    <Text style={styles.buttonText}>Next</Text>
+                                    <Text style={styles.buttonText}>Send</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -257,7 +257,7 @@ const styles = EStyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'space-between',
         width: '90%',
-        borderRadius: 6,
+        borderRadius: 12,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
