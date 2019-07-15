@@ -17,6 +17,7 @@ class HomeScreen extends Component {
             number: "",
             city: "",
             category: "",
+            otherBoxDisplayState: 'none',
         }
     }
 
@@ -61,6 +62,10 @@ class HomeScreen extends Component {
                     value: 'Glass ',
                     },{
                     value: 'Blocked guiding lines for blind people',
+                    },{
+                    value: 'Obstructive intake of footpath',
+                    },{
+                    value: 'Obstructive intake of bicycle path',
                     },];
                 break;
             
@@ -109,12 +114,30 @@ class HomeScreen extends Component {
                     value: 'Dangerous crossing for cyclists/pedestrians',
                     }, {
                     value: 'Dangerous situation for cyclists/pedestrians',
+                    },{
+                    value: 'Crowdedness on footpaths',
+                    }, {
+                    value: 'Missing/defect street lights',
+                    }, {
+                    value: 'Other',
                     },];
                 break;
         
             default:
                 events = []
             
+            }
+
+            checkForOther = (value) => {
+                console.log(value)
+                if(value == 'Other')
+                    this.setState({
+                        otherBoxDisplayState: 'flex'
+                    })
+                else
+                    this.setState({
+                        otherBoxDisplayState: 'none'
+                    })
             }
 
         return (
@@ -125,24 +148,39 @@ class HomeScreen extends Component {
 
                 <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}> 
                     <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
-                        <View style={styles.commentContainer}>
-                            <Text style={styles.label}>Problem</Text>
-                            <Dropdown
-                                onChangeText={(value) => this.setState({category: value})}
-                                baseColor={"#0A0A0A"}
-                                labelFontSize={18}
-                                label='Category'
-                                data={categories}
-                                itemCount={16}
-                            />
-                            <Dropdown
-                                onChangeText={(value) => this.setState({problem: value})}
-                                baseColor={"#0A0A0A"}
-                                labelFontSize={18}
-                                label='Event'
-                                data={events}
-                                itemCount={16}
-                            />
+                        <View style={{flex: 1}}>
+                            <View style={styles.commentContainer}>
+                                <Text style={styles.label}>Problem</Text>
+                                <Dropdown
+                                    onChangeText={(value) => this.setState({category: value})}
+                                    baseColor={"#0A0A0A"}
+                                    labelFontSize={18}
+                                    label='Category'
+                                    data={categories}
+                                    itemCount={16}
+                                />
+                                <Dropdown
+                                    onChangeText={(value) => {this.setState({problem: value}); checkForOther(value)}}
+                                    baseColor={"#0A0A0A"}
+                                    labelFontSize={18}
+                                    label='Event'
+                                    data={events}
+                                    itemCount={16}
+                                />
+                            </View>
+                            <View style={{display: this.state.otherBoxDisplayState}}>
+                                <View style={styles.commentContainer}>
+                                    <Text style={styles.label}>What's the problem?</Text>
+                                    <TextInput
+                                        placeholder = {"Describe the problem..."}
+                                        onChangeText={(comment) => this.setState({comment})}
+                                        value={this.state.comment}
+                                        editable = {true}
+                                        maxLength = {255}
+                                        style={styles.textInput}
+                                    />
+                                </View>
+                            </View>
                         </View>
                     
                         <View style={styles.bottomContainer}>
@@ -212,7 +250,7 @@ const styles = EStyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'space-between',
         width: '90%',
-        borderRadius: 6,
+        borderRadius: 12,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -220,7 +258,6 @@ const styles = EStyleSheet.create({
         },
         shadowOpacity: 0.10,
         shadowRadius: 20,
-
         elevation: 35,
     },
     heading: {

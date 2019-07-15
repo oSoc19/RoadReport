@@ -192,7 +192,7 @@ const styles = EStyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'space-between',
         width: '90%',
-        borderRadius: 6,
+        borderRadius: 12,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -206,14 +206,12 @@ const styles = EStyleSheet.create({
     mapContainer: {
         flex: 1,
         backgroundColor: 'white',
-        marginTop: '5%',
         flexDirection: 'column',
         alignSelf: 'center',
         justifyContent: 'space-around',
         alignItems: 'center',
-        width: '90%',
+        width: '100%',
         height: '50%',
-        borderRadius: 6,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -290,7 +288,7 @@ const styles = EStyleSheet.create({
         marginBottom: 22,
         width: '90%',
         height: 60,
-        borderRadius: 6,
+        borderRadius: 12,
         backgroundColor: '#2594d9', 
         flexDirection: 'column',
         alignItems: 'center',
