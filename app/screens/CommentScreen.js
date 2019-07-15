@@ -67,6 +67,10 @@ class CommentScreen extends Component {
         //}
     }
 
+    goBack = () => {
+        Actions.pop()
+    }
+
     render() {
 
         let categories = [{
@@ -190,9 +194,14 @@ class CommentScreen extends Component {
                                 <View style={styles.circel__selected}/>
                             </View>
 
-                            <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
-                                <Text style={styles.buttonText}>Send Report</Text>
-                            </TouchableOpacity>
+                            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: '5%', marginRight: '5%'}}>
+                                <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
+                                    <Text style={styles.buttonText}>Back</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
+                                    <Text style={styles.buttonText}>Next</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
 
                 </ScrollView>
@@ -297,12 +306,24 @@ const styles = EStyleSheet.create({
         fontFamily: '$openSansRegular',
     },
     submitButton: {
-        marginTop: 20,
+        marginTop: 11,
         marginBottom: 22,
-        width: '90%',
+        width: '47.5%',
         height: 60,
         borderRadius: 30,
         backgroundColor: '#6CE077', 
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        alignSelf: 'center',
+    },
+    backButton: {
+        marginTop: 11,
+        marginBottom: 22,
+        width: '47.5%',
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: '#bdbdbd', 
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-around',

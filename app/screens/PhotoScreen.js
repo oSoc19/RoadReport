@@ -27,6 +27,10 @@ class PhotoScreen extends Component {
         Actions.comment()
     }
 
+    goBack = () => {
+        Actions.pop()
+    }
+
     async snap() {       
         console.log(this.camera);
         if (this.camera) {
@@ -55,11 +59,16 @@ class PhotoScreen extends Component {
                     
                     {/*<Image style={{width: 300, height: 300, borderWidth: 1, borderColor: 'white'}} source={{uri: 'data:image/png;base64,' + this.state.base64Icon }}/>*/}
 
-                <TouchableOpacity style={styles.trigger} onPress={this.snap}/>
+                    <TouchableOpacity style={styles.trigger} onPress={this.snap}/>
 
-                    <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
-                        <Text style={styles.buttonText}>Skip</Text>
-                    </TouchableOpacity>
+                    <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: '5%', paddingRight: '5%'}}>
+                        <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
+                            <Text style={styles.buttonText}>Back</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
+                            <Text style={styles.buttonText}>Skip</Text>
+                        </TouchableOpacity>
+                    </View>
                 </Camera>
             </View>
           );
@@ -116,12 +125,24 @@ const styles = EStyleSheet.create({
         fontFamily: '$openSansBold',
     },
     submitButton: {
-        marginTop: 20,
+        marginTop: 11,
         marginBottom: 22,
-        width: '90%',
+        width: '47.5%',
         height: 60,
         borderRadius: 30,
         backgroundColor: '#2594d9', 
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        alignSelf: 'center',
+    },
+    backButton: {
+        marginTop: 11,
+        marginBottom: 22,
+        width: '47.5%',
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: '#bdbdbd', 
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-around',
