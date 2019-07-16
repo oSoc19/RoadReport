@@ -13,6 +13,7 @@ class HomeScreen extends Component {
             comment: "",
             status: "",
             problem: "",
+            otherProblem: "",
             street: "",
             number: "",
             city: "",
@@ -168,13 +169,13 @@ class HomeScreen extends Component {
                                     itemCount={16}
                                 />
                             </View>
-                            <View style={{display: this.state.otherBoxDisplayState}}>
+                            <View style={{display: this.state.otherBoxDisplayState, flex: 1}}>
                                 <View style={styles.commentContainer}>
                                     <Text style={styles.label}>What's the problem?</Text>
                                     <TextInput
                                         placeholder = {"Describe the problem..."}
-                                        onChangeText={(comment) => this.setState({comment})}
-                                        value={this.state.comment}
+                                        onChangeText={(otherProblem) => this.setState({otherProblem})}
+                                        value={this.state.otherProblem}
                                         editable = {true}
                                         maxLength = {255}
                                         style={styles.textInput}
@@ -270,10 +271,8 @@ const styles = EStyleSheet.create({
         marginTop: 6,
         borderBottomWidth: 0.45,
         borderColor: '#000',
-        borderRadius: 6,
         height: 40,
         width: '100%',
-        paddingBottom: 6,
         fontSize: 16,
         fontFamily: '$openSansRegular',
     },
