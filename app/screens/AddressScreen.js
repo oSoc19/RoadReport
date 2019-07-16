@@ -3,9 +3,8 @@ import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollVi
 
 //modules
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { Dropdown } from 'react-native-material-dropdown'
 import {Actions} from 'react-native-router-flux'
-import MapView, {Marker} from 'react-native-maps'
+import MapView from 'react-native-maps'
 
 class AddressScreen extends Component {
     constructor(props) {
@@ -77,7 +76,7 @@ class AddressScreen extends Component {
                                 region={this.state.region}
                                 onRegionChange={this.onRegionChange}
                             >
-                                <View style={{width: 50, height: 100, justifyContent: 'space-around', alignItems: 'center', paddingBottom: 50}}>
+                                <View pointerEvents="none" style={{width: 50, height: 100, justifyContent: 'space-around', alignItems: 'center', paddingBottom: 50}}>
                                     <Image
                                         style={{width: 50, height: 50}}
                                         source={require('../assets/marker.png')}

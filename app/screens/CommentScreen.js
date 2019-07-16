@@ -11,6 +11,7 @@ class CommentScreen extends Component {
         super(props);
         this.state = {
             comment: "",
+            email: "",
             status: "",
             problem: "",
             street: "",
@@ -172,17 +173,29 @@ class CommentScreen extends Component {
 
                 <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}> 
                     <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
-
-                        <View style={styles.commentContainer}>
-                            <Text style={styles.label}>Comment</Text>
-                            <TextInput
-                                placeholder = {"Describe the problem..."}
-                                onChangeText={(comment) => this.setState({comment})}
-                                value={this.state.comment}
-                                editable = {true}
-                                maxLength = {255}
-                                style={styles.textInput}
-                            />
+                        <View style={{flex: 1}}>
+                            <View style={styles.commentContainer}>
+                                <Text style={styles.label}>Comment</Text>
+                                <TextInput
+                                    placeholder = {"Describe the problem..."}
+                                    onChangeText={(comment) => this.setState({comment})}
+                                    value={this.state.comment}
+                                    editable = {true}
+                                    maxLength = {255}
+                                    style={styles.textInput}
+                                />
+                            </View>
+                            <View style={styles.commentContainer}>
+                                <Text style={styles.label}>Leave your Email to get updates</Text>
+                                <TextInput
+                                    placeholder = {"Email"}
+                                    onChangeText={(email) => this.setState({email})}
+                                    value={this.state.email}
+                                    editable = {true}
+                                    maxLength = {255}
+                                    style={styles.textInput}
+                                />
+                            </View>
                         </View>
                     
 
