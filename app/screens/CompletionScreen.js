@@ -24,9 +24,9 @@ class CompletionScreen extends Component {
                     loop={false}
                     speed={0.8} 
                 />
-                <Text style={styles.message}>Thanks for reporting! We will analyse your submission and take action accordingly.</Text>
+                <Text style={styles.message}>Bedankt om dit probleem te melden! We zullen dit nakijken en gepaste actie ondernemen. </Text>
                 <TouchableOpacity  onPress={() => {Actions.welcome()}} style={styles.submitButton}>
-                    <Text style={styles.buttonText}>Finish</Text>
+                    <Text style={styles.buttonText}>Einde</Text>
                 </TouchableOpacity>
             </View>
         );

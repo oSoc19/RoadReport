@@ -31,12 +31,12 @@ class WelcomeScreen extends Component {
 
     
                 <TouchableOpacity onPress={() => {Actions.home()}} style={styles.submitButton}>
-                    <Text style={styles.buttonText}>Report a Problem</Text>
+                    <Text style={styles.buttonText}>Meld een Probleem</Text>
                 </TouchableOpacity>
 
                 <View style={{width: '70%', alignItems: 'center'}}>
-                    <Text style={styles.message}>Is there something wrong with the bicycle lane or the sidewalk? </Text>
-                    <Text style={styles.message}>Tell us! We will look at your report and take action accordingly.</Text>
+                    <Text style={styles.message}>Ondervond u een probleem met een voet- of fietspad?</Text>
+                    <Text style={styles.message}>Meld het! We zullen dit nakijken en actie ondernemen indien nodig.</Text>
                 </View>
 
             </View>

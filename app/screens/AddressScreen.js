@@ -84,7 +84,7 @@ class AddressScreen extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <Text style={styles.heading}>Report a problem</Text>
+                    <Text style={styles.heading}>Meld een Probleem</Text>
                 </View>
 
                 <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}> 
@@ -100,10 +100,10 @@ class AddressScreen extends Component {
                             </MapView>
 
                             <View style={styles.commentContainer}>
-                                <Text style={styles.label}>Address</Text>
+                                <Text style={styles.label}>Adres</Text>
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                                     <TextInput
-                                        placeholder = {"Street"}
+                                        placeholder = {"Straat"}
                                         onChangeText={(street) => this.setState({street})}
                                         value={this.state.street}
                                         editable = {true}
@@ -112,7 +112,7 @@ class AddressScreen extends Component {
                                     />
                                     <TextInput
                                         keyboardType={"numeric"} 
-                                        placeholder = {"Number"}
+                                        placeholder = {"Huisnummer"}
                                         onChangeText={(number) => this.setState({number})}
                                         value={this.state.number}
                                         editable = {true}
@@ -121,7 +121,7 @@ class AddressScreen extends Component {
                                     />
                                 </View>
                                 <TextInput
-                                    placeholder = {"City"}
+                                    placeholder = {"Stad"}
                                     onChangeText={(city) => this.setState({city})}
                                     value={this.state.city}
                                     editable = {true}
@@ -130,7 +130,7 @@ class AddressScreen extends Component {
                                 />
                             </View>
                             <TouchableOpacity style={styles.locationButton} onPress={this.getLocation}>
-                                <Text style={styles.buttonText}>Use Current Location</Text>
+                                <Text style={styles.buttonText}>Huidige locatie</Text>
                             </TouchableOpacity>
                         </View>
 
@@ -144,10 +144,10 @@ class AddressScreen extends Component {
 
                             <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: '5%', marginRight: '5%'}}>
                                 <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
-                                    <Text style={styles.buttonText}>Back</Text>
+                                    <Text style={styles.buttonText}>Terug</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
-                                    <Text style={styles.buttonText}>Next</Text>
+                                    <Text style={styles.buttonText}>Volgende</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -258,7 +258,7 @@ const styles = EStyleSheet.create({
         borderColor: '#000',
         borderRadius: 6,
         height: 40,
-        width: '74%',
+        width: '64%',
         paddingBottom: 6,
         fontSize: 16,
         fontFamily: '$openSansRegular',
@@ -268,7 +268,7 @@ const styles = EStyleSheet.create({
         borderColor: '#000',
         borderRadius: 6,
         height: 40,
-        width: '24%',
+        width: '34%',
         paddingBottom: 6,
         fontSize: 16,
         fontFamily: '$openSansRegular',
