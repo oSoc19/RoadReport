@@ -54,20 +54,40 @@ class PhotoScreen extends Component {
         } else {
           return (
             <View style={{ flex: 1 }}>
+                <View style={styles.header}>
+                    <Text style={styles.heading}>Maak een foto</Text>
+                </View>
 
                 <Camera ref={camera => this.camera = camera} style={{ flex: 1, flexDirection: "column", justifyContent: "flex-end", alignItems: 'center' }} type={this.state.type}>
                     
                     {/*<Image style={{width: 300, height: 300, borderWidth: 1, borderColor: 'white'}} source={{uri: 'data:image/png;base64,' + this.state.base64Icon }}/>*/}
 
-                    <TouchableOpacity style={styles.trigger} onPress={this.snap}/>
+                    <View style={{alignItems: 'center', alignSelf: 'center', width: '100%', backgroundColor: 'white', paddingTop: 11}}>
+                        <TouchableOpacity style={styles.trigger__outer} onPress={this.snap}>
+                            <View style={styles.trigger__inner}>
+                                <Image 
+                                    style={{width: '70%', height: '70%', alignSelf: 'center'}} 
+                                    resizeMode="contain"
+                                    source={require("../assets/camera_icon.png")}
+                                />
+                            </View>
+                        </TouchableOpacity>
 
-                    <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: '5%', paddingRight: '5%'}}>
-                        <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
-                            <Text style={styles.buttonText}>Terug</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
-                            <Text style={styles.buttonText}>Overslaan</Text>
-                        </TouchableOpacity>
+                        <View style={styles.pagination}>
+                            <View style={styles.circel}/>
+                            <View style={styles.circel}/>
+                            <View style={styles.circel__selected}/>
+                            <View style={styles.circel}/>
+                        </View>
+
+                        <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: '5%', paddingRight: '5%'}}>
+                            <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
+                                <Text style={styles.buttonText}>Terug</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
+                                <Text style={styles.buttonText}>Overslaan</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </Camera>
             </View>
@@ -85,11 +105,41 @@ const styles = EStyleSheet.create({
         backgroundColor: 'white',
         color: '#0F0F0F',
     },
-    trigger: {
-        backgroundColor: '#FFF',
+    trigger__outer: {
+        backgroundColor: '#6CE077',
+        justifyContent: 'space-around',
+        width: 80,
+        height: 80,
+        borderRadius: 40,
+    },
+    trigger__inner: {
+        backgroundColor: '#6CE077',
+        justifyContent: 'space-around',
+        alignSelf: 'center',
         width: 70,
         height: 70,
         borderRadius: 35,
+        borderWidth: 3,
+        borderColor: '#FFF',
+    },
+    pagination: {
+        marginTop: 11,
+        width: '20%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignSelf: 'center'
+    },
+    circel: {
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        backgroundColor: '#cfcfcf',
+    },
+    circel__selected: {
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        backgroundColor: '#6e6e6e',
     },
     header: {
         flexDirection: 'column',
@@ -120,7 +170,7 @@ const styles = EStyleSheet.create({
     },
     heading: {
         paddingBottom: 8,
-        fontSize: 32,
+        fontSize: 28,
         color: 'white',
         fontFamily: '$openSansBold',
     },

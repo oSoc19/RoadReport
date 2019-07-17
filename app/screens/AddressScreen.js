@@ -130,7 +130,7 @@ class AddressScreen extends Component {
                                 />
                             </View>
                             <TouchableOpacity style={styles.locationButton} onPress={this.getLocation}>
-                                <Text style={styles.buttonText}>Huidige locatie</Text>
+                                <Text style={styles.buttonText}>Gebruik huidige locatie</Text>
                             </TouchableOpacity>
                         </View>
 
