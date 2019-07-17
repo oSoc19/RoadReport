@@ -63,10 +63,10 @@ class PhotoScreen extends Component {
 
                     <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: '5%', paddingRight: '5%'}}>
                         <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
-                            <Text style={styles.buttonText}>Back</Text>
+                            <Text style={styles.buttonText}>Terug</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
-                            <Text style={styles.buttonText}>Skip</Text>
+                            <Text style={styles.buttonText}>Overslaan</Text>
                         </TouchableOpacity>
                     </View>
                 </Camera>

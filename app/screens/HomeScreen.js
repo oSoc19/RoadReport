@@ -29,98 +29,98 @@ class HomeScreen extends Component {
     render() {
 
         let categories = [{
-            value: 'Bicycle path/footpath',
+            value: 'Fietspad/voetpad',
             }, {
-            value: 'Signalisation',
+            value: 'Signalisatie',
             }, {
-            value: 'Bicycle rack',
+            value: 'Fietsenstalling',
             },{
-            value: 'Cycling infrastructure',
+            value: 'Fietsinfrastructuur',
             },{
-            value: 'Other',
+            value: 'Andere',
             },];
 
         let events = []
 
         switch(this.state.category) {
 
-            case 'Bicycle path/footpath':
+            case 'Fietspad/voetpad':
                 events = [{
-                    value: 'Hole in footpath',
+                    value: 'Gat in het voetpad',
                     }, {
-                    value: 'Hole in bicycle path',
+                    value: 'Gat in het fietspad',
                     }, {
-                    value: 'Damaged footpath',
+                    value: 'Beschadiging van het voetpad',
                     },{
-                    value: 'Damaged bicycle path',
+                    value: 'Beschadiging van het fietspad',
                     },{
-                    value: 'Unclear marking pedestrian crossing',
+                    value: 'Markering zebrapad',
                     },{
-                    value: 'Unclear marking bicycle path',
+                    value: 'Markering fietspad',
                     },{
-                    value: 'Snow, frost, slipperiness',
+                    value: 'Sneeuw, ijzel, gladheid',
                     },{
-                    value: 'Glass ',
+                    value: 'Glas ',
                     },{
-                    value: 'Blocked guiding lines for blind people',
+                    value: 'Blindengeleidelijnen versperd',
                     },{
-                    value: 'Obstructive intake of footpath',
+                    value: 'Hinderlijke inname van voetpad',
                     },{
-                    value: 'Obstructive intake of bicycle path',
+                    value: 'Hinderlijke inname van fietspad',
                     },];
                 break;
             
-            case 'Signalisation':
+            case 'Signalisatie':
                 events = [{
-                    value: 'Sign gone/moved',
+                    value: 'Bord weg/verplaatst',
                     }, {
-                    value: 'Traffic light defect',
+                    value: 'Verkeerslicht defect',
                     }, {
-                    value: 'Traffic light button defect',
+                    value: 'Drukknop verkeerslicht defect',
                     },{
-                    value: 'Problem with VMS sign',
+                    value: 'Probleem met verkeersgeleidingssysteem bord',
                     },{
-                    value: 'Bicycle counter defect',
+                    value: 'Fietstelpaal defect',
                     },];
                 break;
         
-            case 'Bicycle rack':
+            case 'Fietsenstalling':
                 events = [{
-                    value: 'Always full',
+                    value: 'Overvol',
                     }, {
-                    value: 'In need of reparation',
+                    value: 'Te herstellen',
                     }, {
-                    value: 'Weed / trash',
+                    value: 'Onkruid / zwerfvuil',
                     },{
-                    value: 'Left bicycles',
+                    value: 'Achtergelaten fietsen',
                     },{
-                    value: 'Suggestion for sheltered/indoor bicycle rack',
+                    value: 'Suggestie voor locatie overdekte/inpandige fietsenstalling',
                     },];
                 break;
         
-            case 'Cycling infrastructure':
+            case 'Fietsinfrastructuur':
                 events = [{
-                    value: 'Broken cycling pump',
+                    value: 'Fietspomp kapot',
                     }, {
-                    value: 'Broken/empty cycling lights vending machine',
+                    value: 'Herstelzuil kapot',
                     }, {
-                    value: 'Broken repair machine',
+                    value: 'Fietslichtjes automaat leeg/kapot',
                     },];
                 break;
 
-            case 'Other':
+            case 'Andere':
                 events = [{
-                    value: 'Unaccessible footpath for wheelchairs',
+                    value: 'Ontoegankelijk voetpad voor rolstoelgebruikers',
                     }, {
-                    value: 'Dangerous crossing for cyclists/pedestrians',
+                    value: 'Gevaarlijk kruispunt voor fietsers/voetgangers',
                     }, {
-                    value: 'Dangerous situation for cyclists/pedestrians',
+                    value: 'Gevaarlijke situatie voor fietsers/voetgangers',
                     },{
-                    value: 'Crowdedness on footpaths',
+                    value: 'Defecte/ontbrekende straatverlichting ',
                     }, {
-                    value: 'Missing/defect street lights',
+                    value: 'Drukte op het voetpad',
                     }, {
-                    value: 'Other',
+                    value: 'Andere',
                     },];
                 break;
         
@@ -144,19 +144,19 @@ class HomeScreen extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <Text style={styles.heading}>Report a problem</Text>
+                    <Text style={styles.heading}>Meld een Probleem</Text>
                 </View>
 
                 <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}> 
                     <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
                         <View style={{flex: 1}}>
                             <View style={styles.commentContainer}>
-                                <Text style={styles.label}>Problem</Text>
+                                <Text style={styles.label}>Kies een probleem uit de lijst</Text>
                                 <Dropdown
                                     onChangeText={(value) => this.setState({category: value})}
                                     baseColor={"#0A0A0A"}
                                     labelFontSize={18}
-                                    label='Category'
+                                    label='Categorie'
                                     data={categories}
                                     itemCount={16}
                                 />
@@ -164,16 +164,16 @@ class HomeScreen extends Component {
                                     onChangeText={(value) => {this.setState({problem: value}); checkForOther(value)}}
                                     baseColor={"#0A0A0A"}
                                     labelFontSize={18}
-                                    label='Event'
+                                    label='Probleem'
                                     data={events}
                                     itemCount={16}
                                 />
                             </View>
                             <View style={{display: this.state.otherBoxDisplayState, flex: 1}}>
                                 <View style={styles.commentContainer}>
-                                    <Text style={styles.label}>What's the problem?</Text>
+                                    <Text style={styles.label}>Wat is het probleem?</Text>
                                     <TextInput
-                                        placeholder = {"Describe the problem..."}
+                                        placeholder = {"Beschrijf het probleem..."}
                                         onChangeText={(otherProblem) => this.setState({otherProblem})}
                                         value={this.state.otherProblem}
                                         editable = {true}
@@ -193,7 +193,7 @@ class HomeScreen extends Component {
                             </View>
 
                             <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
-                                <Text style={styles.buttonText}>Next</Text>
+                                <Text style={styles.buttonText}>Volgende</Text>
                             </TouchableOpacity>
                         </View>
 

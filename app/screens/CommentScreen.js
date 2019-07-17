@@ -3,7 +3,6 @@ import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollVi
 
 //modules
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { Dropdown } from 'react-native-material-dropdown';
 import {Actions} from 'react-native-router-flux'
 
 class CommentScreen extends Component {
@@ -74,97 +73,6 @@ class CommentScreen extends Component {
 
     render() {
 
-        let categories = [{
-            value: 'Bicycle path/footpath',
-            }, {
-            value: 'Signalisation',
-            }, {
-            value: 'Bicycle rack',
-            },{
-            value: 'Cycling infrastructure',
-            },{
-            value: 'Other',
-            },];
-
-        let events = []
-
-        switch(this.state.category) {
-
-            case 'Bicycle path/footpath':
-                events = [{
-                    value: 'Hole in footpath',
-                    }, {
-                    value: 'Hole in bicycle path',
-                    }, {
-                    value: 'Damaged footpath',
-                    },{
-                    value: 'Damaged bicycle path',
-                    },{
-                    value: 'Unclear marking pedestrian crossing',
-                    },{
-                    value: 'Unclear marking bicycle path',
-                    },{
-                    value: 'Snow, frost, slipperiness',
-                    },{
-                    value: 'Glass ',
-                    },{
-                    value: 'Blocked guiding lines for blind people',
-                    },];
-                break;
-            
-            case 'Signalisation':
-                events = [{
-                    value: 'Sign gone/moved',
-                    }, {
-                    value: 'Traffic light defect',
-                    }, {
-                    value: 'Traffic light button defect',
-                    },{
-                    value: 'Problem with VMS sign',
-                    },{
-                    value: 'Bicycle counter defect',
-                    },];
-                break;
-        
-            case 'Bicycle rack':
-                events = [{
-                    value: 'Always full',
-                    }, {
-                    value: 'In need of reparation',
-                    }, {
-                    value: 'Weed / trash',
-                    },{
-                    value: 'Left bicycles',
-                    },{
-                    value: 'Suggestion for sheltered/indoor bicycle rack',
-                    },];
-                break;
-        
-            case 'Cycling infrastructure':
-                events = [{
-                    value: 'Broken cycling pump',
-                    }, {
-                    value: 'Broken/empty cycling lights vending machine',
-                    }, {
-                    value: 'Broken repair machine',
-                    },];
-                break;
-
-            case 'Other':
-                events = [{
-                    value: 'Unaccessible footpath for wheelchairs',
-                    }, {
-                    value: 'Dangerous crossing for cyclists/pedestrians',
-                    }, {
-                    value: 'Dangerous situation for cyclists/pedestrians',
-                    },];
-                break;
-        
-            default:
-                events = []
-            
-            }
-
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
@@ -175,9 +83,9 @@ class CommentScreen extends Component {
                     <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
                         <View style={{flex: 1}}>
                             <View style={styles.commentContainer}>
-                                <Text style={styles.label}>Comment</Text>
+                                <Text style={styles.label}>Heb je meer info over het probleem?</Text>
                                 <TextInput
-                                    placeholder = {"Describe the problem..."}
+                                    placeholder = {"Beschrijf het probleem..."}
                                     onChangeText={(comment) => this.setState({comment})}
                                     value={this.state.comment}
                                     editable = {true}
@@ -186,7 +94,7 @@ class CommentScreen extends Component {
                                 />
                             </View>
                             <View style={styles.commentContainer}>
-                                <Text style={styles.label}>Leave your Email to get updates</Text>
+                                <Text style={styles.label}>Laat je Email achter als je updates over het probleem wilt ontvangen</Text>
                                 <TextInput
                                     placeholder = {"Email"}
                                     onChangeText={(email) => this.setState({email})}
@@ -212,7 +120,7 @@ class CommentScreen extends Component {
                                     <Text style={styles.buttonText}>Back</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
-                                    <Text style={styles.buttonText}>Send</Text>
+                                    <Text style={styles.buttonText}>Verzend</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
