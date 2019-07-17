@@ -10,6 +10,7 @@ class AddressScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            mapLoaded: false,
             street: "",
             number: "",
             city: "",
@@ -33,6 +34,14 @@ class AddressScreen extends Component {
     goBack = () => {
         Actions.pop()
     }
+
+    componentDidMount() {
+        this.setState({
+            mapLoaded: true
+        })
+    }
+
+
 
     getLocation = () => {
         navigator.geolocation.getCurrentPosition(
@@ -61,6 +70,17 @@ class AddressScreen extends Component {
       }
 
     render() {
+        let marker = <View></View>
+
+        if(this.state.mapLoaded) {
+            marker =    <View pointerEvents="none" style={{width: 50, height: 100, justifyContent: 'space-around', alignItems: 'center', paddingBottom: 50}}>
+                            <Image
+                                style={{width: 50, height: 50}}
+                                source={require('../assets/marker.png')}
+                            />
+                        </View>
+        }
+
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
@@ -76,12 +96,7 @@ class AddressScreen extends Component {
                                 region={this.state.region}
                                 onRegionChange={this.onRegionChange}
                             >
-                                <View pointerEvents="none" style={{width: 50, height: 100, justifyContent: 'space-around', alignItems: 'center', paddingBottom: 50}}>
-                                    <Image
-                                        style={{width: 50, height: 50}}
-                                        source={require('../assets/marker.png')}
-                                    />
-                                </View>
+                                {marker}
                             </MapView>
 
                             <View style={styles.commentContainer}>
