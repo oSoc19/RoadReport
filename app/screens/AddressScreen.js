@@ -1,16 +1,17 @@
-import React, { Component, AsyncStorage} from 'react'
-import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert, Image} from 'react-native'
+import React, { Component } from 'react'
+import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, AsyncStorage, Image} from 'react-native'
 
 //modules
 import EStyleSheet from 'react-native-extended-stylesheet'
 import {Actions} from 'react-native-router-flux'
 import MapView from 'react-native-maps'
 
+import Storage from '../constants/Storage'
+
 class AddressScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mapLoaded: false,
             street: "",
             number: "",
             city: "",
@@ -35,25 +36,23 @@ class AddressScreen extends Component {
         Actions.pop()
     }
 
-    componentDidMount() {
-        this.setState({
-            mapLoaded: true
-        })
-    }
-
     _retrieveData = async () => {
         try {
-          const value = await AsyncStorage.getItem('problem');
+            console.log('in function')
+          const value = await AsyncStorage.getItem(Storage.PROBLEM)
           if (value !== null) {
             // We have data!!
             console.log(value);
           }
+          else
+            console.log('no value')
         } catch (error) {
           // Error retrieving data
         }
       };
 
     getLocation = () => {
+        this._retrieveData()
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.setState({
@@ -67,7 +66,7 @@ class AddressScreen extends Component {
                         latitudeDelta: 0.0032,
                         longitudeDelta: 0.0011,
                     },
-                }, () => {console.log(this.state.region)});
+                });
             },
             (error) =>
                 console.log(error),
@@ -76,22 +75,9 @@ class AddressScreen extends Component {
     }
 
     onRegionChange = (region) => {
-        console.log(region)
       }
 
     render() {
-        this._retrieveData()
-        let marker = null;
-
-        if(this.state.mapLoaded) {
-            marker =    <View pointerEvents="none" style={{width: 50, height: 100, justifyContent: 'space-around', alignItems: 'center', paddingBottom: 50}}>
-                            <Image
-                                style={{width: 50, height: 50}}
-                                source={require('../assets/marker.png')}
-                            />
-                        </View>
-        }
-
         return (
             <View style={styles.container}>
                 <View style={styles.header}>

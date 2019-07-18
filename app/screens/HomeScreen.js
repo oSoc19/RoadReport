@@ -1,10 +1,13 @@
-import React, { Component, AsyncStorage } from 'react'
-import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert} from 'react-native'
+import React, { Component } from 'react'
+import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, AsyncStorage} from 'react-native'
 
+import { t } from '../localization/Localization';
 //modules
-import EStyleSheet from 'react-native-extended-stylesheet';
-import { Dropdown } from 'react-native-material-dropdown';
+import EStyleSheet from 'react-native-extended-stylesheet'
+import { Dropdown } from 'react-native-material-dropdown'
 import {Actions} from 'react-native-router-flux'
+
+import Storage from '../constants/Storage'
 
 class HomeScreen extends Component {
     constructor(props) {
@@ -23,14 +26,20 @@ class HomeScreen extends Component {
     }
 
     postToApi = async() => {
-        try {
-            await AsyncStorage.setItem('Problem', this.state.problem);
-          } catch (error) {
-            // Error saving data
-          }
+        this._storeData()
 
         Actions.address()
     }
+
+    _storeData = async () => {
+        console.log('in function')
+        try {
+            AsyncStorage.setItem(Storage.PROBLEM, this.state.problem)
+            .then(console.log('storage set'))
+        } catch (error) {
+          console.log(error)
+        }
+      };
 
     render() {
 
@@ -136,6 +145,7 @@ class HomeScreen extends Component {
             }
 
             checkForOther = (value) => {
+                this._storeData()
                 if(value == 'Andere')
                     this.setState({
                         otherBoxDisplayState: 'flex'
@@ -191,7 +201,7 @@ class HomeScreen extends Component {
                         </View>
 
                             <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
-                                <Text style={styles.buttonText}>Volgende</Text>
+                                <Text style={styles.buttonText}>{t('general.next')}</Text>
                             </TouchableOpacity>
 
                     </ScrollView>
