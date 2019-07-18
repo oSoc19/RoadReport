@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, AsyncStorage} from 'react'
 import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert, Image} from 'react-native'
 
 //modules
@@ -41,7 +41,17 @@ class AddressScreen extends Component {
         })
     }
 
-
+    _retrieveData = async () => {
+        try {
+          const value = await AsyncStorage.getItem('problem');
+          if (value !== null) {
+            // We have data!!
+            console.log(value);
+          }
+        } catch (error) {
+          // Error retrieving data
+        }
+      };
 
     getLocation = () => {
         navigator.geolocation.getCurrentPosition(
@@ -70,7 +80,8 @@ class AddressScreen extends Component {
       }
 
     render() {
-        let marker = <View></View>
+        this._retrieveData()
+        let marker = null;
 
         if(this.state.mapLoaded) {
             marker =    <View pointerEvents="none" style={{width: 50, height: 100, justifyContent: 'space-around', alignItems: 'center', paddingBottom: 50}}>
@@ -85,20 +96,26 @@ class AddressScreen extends Component {
             <View style={styles.container}>
                 <View style={styles.header}>
                     <Text style={styles.heading}>Meld een Probleem</Text>
+                    <Text style={styles.heading}>2/4</Text>
                 </View>
 
                 <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}> 
                     <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
 
                         <View style={{height: '70%'}}>
-                            <MapView
-                                style={styles.mapContainer}
-                                region={this.state.region}
-                                onRegionChange={this.onRegionChange}
-                            >
-                                {marker}
-                            </MapView>
-
+                            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                                <MapView
+                                    style={styles.mapContainer}
+                                    region={this.state.region}
+                                    onRegionChange={this.onRegionChange}
+                                />
+                                <View pointerEvents="none" style={{width: 50, height: 100, justifyContent: 'space-around', alignItems: 'center', paddingBottom: 50, position: 'absolute', elevation: 36}}>
+                                    <Image
+                                        style={{width: 50, height: 50}}
+                                        source={require('../assets/marker.png')}
+                                    />
+                                </View>
+                            </View>
                             <View style={styles.commentContainer}>
                                 <Text style={styles.label}>Adres</Text>
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -134,14 +151,6 @@ class AddressScreen extends Component {
                             </TouchableOpacity>
                         </View>
 
-                        <View style={styles.bottomContainer}>
-                            <View style={styles.pagination}>
-                                <View style={styles.circel}/>
-                                <View style={styles.circel__selected}/>
-                                <View style={styles.circel}/>
-                                <View style={styles.circel}/>
-                            </View>
-
                             <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: '5%', marginRight: '5%'}}>
                                 <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
                                     <Text style={styles.buttonText}>Terug</Text>
@@ -150,7 +159,6 @@ class AddressScreen extends Component {
                                     <Text style={styles.buttonText}>Volgende</Text>
                                 </TouchableOpacity>
                             </View>
-                        </View>
 
                 </ScrollView>
                 </KeyboardAvoidingView>
@@ -171,37 +179,20 @@ const styles = EStyleSheet.create({
     bottomContainer: {
         flexDirection: 'column',
     },
-    pagination: {
-        marginTop: 11,
-        width: '20%',
+    header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignSelf: 'center'
-    },
-    circel: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        backgroundColor: '#cfcfcf',
-    },
-    circel__selected: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        backgroundColor: '#6e6e6e',
-    },
-    header: {
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
         width: '100%',
         height: '11%',
         backgroundColor: '#2594d9',
         paddingLeft: '5%',
+        paddingRight: '5%'
     },
     commentContainer: {
         backgroundColor: 'white',
-        marginTop: '5%',
-        padding: '4%',
+        marginTop: 20,
+        padding: 14,
         flexDirection: 'column',
         alignSelf: 'center',
         justifyContent: 'space-between',
@@ -214,9 +205,9 @@ const styles = EStyleSheet.create({
         },
         shadowOpacity: 0.10,
         shadowRadius: 20,
-
-        elevation: 35,
+        elevation: 5,
     },
+
     mapContainer: {
         flex: 1,
         backgroundColor: 'white',
@@ -226,19 +217,10 @@ const styles = EStyleSheet.create({
         alignItems: 'center',
         width: '100%',
         height: '50%',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 0,
-        },
-        shadowOpacity: 0.10,
-        shadowRadius: 20,
-
-        elevation: 35,
     },
     heading: {
         paddingBottom: 8,
-        fontSize: 28,
+        fontSize: 24,
         color: 'white',
         fontFamily: '$openSansBold',
     },

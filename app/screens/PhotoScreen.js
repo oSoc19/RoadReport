@@ -56,6 +56,7 @@ class PhotoScreen extends Component {
             <View style={{ flex: 1 }}>
                 <View style={styles.header}>
                     <Text style={styles.heading}>Maak een foto</Text>
+                    <Text style={styles.heading}>3/4</Text>
                 </View>
 
                 <Camera ref={camera => this.camera = camera} style={{ flex: 1, flexDirection: "column", justifyContent: "flex-end", alignItems: 'center' }} type={this.state.type}>
@@ -72,13 +73,6 @@ class PhotoScreen extends Component {
                                 />
                             </View>
                         </TouchableOpacity>
-
-                        <View style={styles.pagination}>
-                            <View style={styles.circel}/>
-                            <View style={styles.circel}/>
-                            <View style={styles.circel__selected}/>
-                            <View style={styles.circel}/>
-                        </View>
 
                         <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: '5%', paddingRight: '5%'}}>
                             <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
@@ -122,32 +116,15 @@ const styles = EStyleSheet.create({
         borderWidth: 3,
         borderColor: '#FFF',
     },
-    pagination: {
-        marginTop: 11,
-        width: '20%',
+    header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignSelf: 'center'
-    },
-    circel: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        backgroundColor: '#cfcfcf',
-    },
-    circel__selected: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        backgroundColor: '#6e6e6e',
-    },
-    header: {
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
         width: '100%',
         height: '11%',
         backgroundColor: '#2594d9',
         paddingLeft: '5%',
+        paddingRight: '5%'
     },
     commentContainer: {
         backgroundColor: 'white',
@@ -170,7 +147,7 @@ const styles = EStyleSheet.create({
     },
     heading: {
         paddingBottom: 8,
-        fontSize: 28,
+        fontSize: 24,
         color: 'white',
         fontFamily: '$openSansBold',
     },

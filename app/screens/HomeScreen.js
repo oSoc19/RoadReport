@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, AsyncStorage } from 'react'
 import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert} from 'react-native'
 
 //modules
@@ -22,7 +22,13 @@ class HomeScreen extends Component {
         }
     }
 
-    postToApi = () => {
+    postToApi = async() => {
+        try {
+            await AsyncStorage.setItem('Problem', this.state.problem);
+          } catch (error) {
+            // Error saving data
+          }
+
         Actions.address()
     }
 
@@ -130,8 +136,7 @@ class HomeScreen extends Component {
             }
 
             checkForOther = (value) => {
-                console.log(value)
-                if(value == 'Other')
+                if(value == 'Andere')
                     this.setState({
                         otherBoxDisplayState: 'flex'
                     })
@@ -145,6 +150,7 @@ class HomeScreen extends Component {
             <View style={styles.container}>
                 <View style={styles.header}>
                     <Text style={styles.heading}>Meld een Probleem</Text>
+                    <Text style={styles.heading}>1/4</Text>
                 </View>
 
                 <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}> 
@@ -183,19 +189,10 @@ class HomeScreen extends Component {
                                 </View>
                             </View>
                         </View>
-                    
-                        <View style={styles.bottomContainer}>
-                            <View style={styles.pagination}>
-                                <View style={styles.circel__selected}/>
-                                <View style={styles.circel}/>
-                                <View style={styles.circel}/>
-                                <View style={styles.circel}/>
-                            </View>
 
                             <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
                                 <Text style={styles.buttonText}>Volgende</Text>
                             </TouchableOpacity>
-                        </View>
 
                     </ScrollView>
                 </KeyboardAvoidingView>
@@ -216,37 +213,20 @@ const styles = EStyleSheet.create({
     bottomContainer: {
         flexDirection: 'column',
     },
-    pagination: {
-        marginTop: 11,
-        width: '20%',
+    header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignSelf: 'center'
-    },
-    circel: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        backgroundColor: '#cfcfcf',
-    },
-    circel__selected: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        backgroundColor: '#6e6e6e',
-    },
-    header: {
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
         width: '100%',
         height: '11%',
         backgroundColor: '#2594d9',
         paddingLeft: '5%',
+        paddingRight: '5%'
     },
     commentContainer: {
         backgroundColor: 'white',
-        marginTop: '5%',
-        padding: '4%',
+        marginTop: 20,
+        padding: 14,
         flexDirection: 'column',
         alignSelf: 'center',
         justifyContent: 'space-between',
@@ -259,11 +239,11 @@ const styles = EStyleSheet.create({
         },
         shadowOpacity: 0.10,
         shadowRadius: 20,
-        elevation: 35,
+        elevation: 5,
     },
     heading: {
         paddingBottom: 8,
-        fontSize: 28,
+        fontSize: 24,
         color: 'white',
         fontFamily: '$openSansBold',
     },

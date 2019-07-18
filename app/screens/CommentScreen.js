@@ -77,6 +77,7 @@ class CommentScreen extends Component {
             <View style={styles.container}>
                 <View style={styles.header}>
                     <Text style={styles.heading}>Report a problem</Text>
+                    <Text style={styles.heading}>4/4</Text>
                 </View>
 
                 <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}> 
@@ -107,14 +108,6 @@ class CommentScreen extends Component {
                         </View>
                     
 
-                        <View style={styles.bottomContainer}>
-                            <View style={styles.pagination}>
-                                <View style={styles.circel}/>
-                                <View style={styles.circel}/>
-                                <View style={styles.circel}/>
-                                <View style={styles.circel__selected}/>
-                            </View>
-
                             <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: '5%', marginRight: '5%'}}>
                                 <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
                                     <Text style={styles.buttonText}>Back</Text>
@@ -123,7 +116,6 @@ class CommentScreen extends Component {
                                     <Text style={styles.buttonText}>Verzend</Text>
                                 </TouchableOpacity>
                             </View>
-                        </View>
 
                 </ScrollView>
                 </KeyboardAvoidingView>
@@ -144,36 +136,20 @@ const styles = EStyleSheet.create({
     bottomContainer: {
         flexDirection: 'column',
     },
-    pagination: {
-        width: '20%',
+    header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignSelf: 'center'
-    },
-    circel: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        backgroundColor: '#cfcfcf',
-    },
-    circel__selected: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        backgroundColor: '#6e6e6e',
-    },
-    header: {
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
         width: '100%',
         height: '11%',
         backgroundColor: '#2594d9',
         paddingLeft: '5%',
+        paddingRight: '5%'
     },
     commentContainer: {
         backgroundColor: 'white',
-        marginTop: '5%',
-        padding: '4%',
+        marginTop: 20,
+        padding: 14,
         flexDirection: 'column',
         alignSelf: 'center',
         justifyContent: 'space-between',
@@ -186,12 +162,11 @@ const styles = EStyleSheet.create({
         },
         shadowOpacity: 0.10,
         shadowRadius: 20,
-
-        elevation: 35,
+        elevation: 5,
     },
     heading: {
         paddingBottom: 8,
-        fontSize: 32,
+        fontSize: 24,
         color: 'white',
         fontFamily: '$openSansBold',
     },
