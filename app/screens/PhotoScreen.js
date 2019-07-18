@@ -13,8 +13,9 @@ class PhotoScreen extends Component {
         this.state = {
             hasCameraPermission: null,
             type: Camera.Constants.Type.back,
-            base64Icon: "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAwBQTFRF7c5J78kt+/Xm78lQ6stH5LI36bQh6rcf7sQp671G89ZZ8c9V8c5U9+u27MhJ/Pjv9txf8uCx57c937Ay5L1n58Nb67si8tVZ5sA68tJX/Pfr7dF58tBG9d5e8+Gc6chN6LM+7spN1pos6rYs6L8+47hE7cNG6bQc9uFj7sMn4rc17cMx3atG8duj+O7B686H7cAl7cEm7sRM26cq/vz5/v767NFY7tJM78Yq8s8y3agt9dte6sVD/vz15bY59Nlb8txY9+y86LpA5LxL67pE7L5H05Ai2Z4m58Vz89RI7dKr+/XY8Ms68dx/6sZE7sRCzIEN0YwZ67wi6rk27L4k9NZB4rAz7L0j5rM66bMb682a5sJG6LEm3asy3q0w3q026sqC8cxJ6bYd685U5a457cIn7MBJ8tZW7c1I7c5K7cQ18Msu/v3678tQ3aMq7tNe6chu6rgg79VN8tNH8c0w57Q83akq7dBb9Nld9d5g6cdC8dyb675F/v327NB6////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/LvB3QAAAMFJREFUeNpiqIcAbz0ogwFKm7GgCjgyZMihCLCkc0nkIAnIMVRw2UhDBGp5fcurGOyLfbhVtJwLdJkY8oscZCsFPBk5spiNaoTC4hnqk801Qi2zLQyD2NlcWWP5GepN5TOtSxg1QwrV01itpECG2kaLy3AYiCWxcRozQWyp9pNMDWePDI4QgVpbx5eo7a+mHFOqAxUQVeRhdrLjdFFQggqo5tqVeSS456UEQgWE4/RBboxyC4AKCEI9Wu9lUl8PEGAAV7NY4hyx8voAAAAASUVORK5CYII=",
+            base64Icon: "",
             display: 'none',
+            picture: "none",
         };
     }
 
@@ -31,16 +32,21 @@ class PhotoScreen extends Component {
         Actions.pop()
     }
 
-    async snap() {       
-        console.log(this.camera);
+    handleCameraRef = (camera) => {
+        this.camera = camera;
+    }
+
+    snap = () => {
         if (this.camera) {
-            console.log('Taking photo');
-            const options = { quality: 1, base64: true, fixOrientation: true, 
-            exif: true};
-            await this.camera.takePictureAsync(options).then(photo => {
-                photo.exif.Orientation = 1;            
-                console.log(photo);            
-            });     
+            const options = { quality: 0.01, base64: true, fixOrientation: true, exif: true, skipProcessing: true};
+            this.camera.takePictureAsync(options)
+                .then(photo => {
+                    photo.exif.Orientation = 1;
+                    this.setState({
+                        base64Icon: photo.base64,
+                        picture: "flex",
+                    })
+                });     
         }
     }
 
@@ -59,9 +65,7 @@ class PhotoScreen extends Component {
                     <Text style={styles.heading}>3/4</Text>
                 </View>
 
-                <Camera ref={camera => this.camera = camera} style={{ flex: 1, flexDirection: "column", justifyContent: "flex-end", alignItems: 'center' }} type={this.state.type}>
-                    
-                    {/*<Image style={{width: 300, height: 300, borderWidth: 1, borderColor: 'white'}} source={{uri: 'data:image/png;base64,' + this.state.base64Icon }}/>*/}
+                <Camera ref={this.handleCameraRef} style={{ flex: 1, flexDirection: "column", justifyContent: "flex-end", alignItems: 'center' }} type={this.state.type}>
 
                     <View style={{alignItems: 'center', alignSelf: 'center', width: '100%', backgroundColor: 'white', paddingTop: 11}}>
                         <TouchableOpacity style={styles.trigger__outer} onPress={this.snap}>
@@ -84,6 +88,18 @@ class PhotoScreen extends Component {
                         </View>
                     </View>
                 </Camera>
+                <View style={{flex:1, display: this.state.picture, position: 'absolute', alignItems: 'flex-end', width: '100%', height: '100%', zIndex: 2, }} >
+                    <View style={{position: 'absolute' , width: '100%', flexDirection: 'row', alignItems: 'center',justifyContent: 'space-between', paddingLeft: '5%', paddingRight: '5%', zIndex: 5}}>
+                        <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
+                            <Text style={styles.buttonText}>Terug</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
+                            <Text style={styles.buttonText}>Overslaan</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <Image style={{width: '100%', height: '100%', zIndex: 2}} resizeMode="cover"  source={{uri: 'data:image/png;base64,' + this.state.base64Icon }}/>
+                    
+                </View>
             </View>
           );
         }
