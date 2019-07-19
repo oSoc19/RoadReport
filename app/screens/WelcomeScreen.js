@@ -22,7 +22,7 @@ class WelcomeScreen extends Component {
                     zIndex: 0,
                     }}
                     source={require('../assets/animations/intro.json')} 
-                    resizeMode="contain"
+                    resizeMode="cover"
                     autoPlay 
                     loop 
                 />
