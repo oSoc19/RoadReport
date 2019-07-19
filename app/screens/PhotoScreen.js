@@ -13,9 +13,11 @@ class PhotoScreen extends Component {
         this.state = {
             hasCameraPermission: null,
             type: Camera.Constants.Type.back,
-            base64Icon: "",
-            display: 'none',
-            picture: "none",
+            photo: {
+                uri: null,
+                base64: null,
+                display: "none",
+            }
         };
     }
 
@@ -38,16 +40,29 @@ class PhotoScreen extends Component {
 
     snap = () => {
         if (this.camera) {
-            const options = { quality: 0.01, base64: true, fixOrientation: true, exif: true, skipProcessing: true};
+            const options = { quality: 1, base64: true, fixOrientation: true, exif: true, skipProcessing: false};
             this.camera.takePictureAsync(options)
                 .then(photo => {
                     photo.exif.Orientation = 1;
                     this.setState({
-                        base64Icon: photo.base64,
-                        picture: "flex",
+                        photo: {
+                            uri: photo.uri,
+                            base64: photo.base64,
+                            display: "flex",
+                        }
                     })
                 });     
         }
+    }
+
+    tryAgain = () => {
+        this.setState({
+            photo: {
+                uri: null,
+                base64: null,
+                display: "none",
+            }
+        })
     }
 
     render() {
@@ -88,16 +103,16 @@ class PhotoScreen extends Component {
                         </View>
                     </View>
                 </Camera>
-                <View style={{flex:1, display: this.state.picture, position: 'absolute', alignItems: 'flex-end', width: '100%', height: '100%', zIndex: 2, }} >
-                    <View style={{position: 'absolute' , width: '100%', flexDirection: 'row', alignItems: 'center',justifyContent: 'space-between', paddingLeft: '5%', paddingRight: '5%', zIndex: 5}}>
-                        <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
-                            <Text style={styles.buttonText}>Terug</Text>
+                <View style={{flex:1, display: this.state.photo.display, position: 'absolute', flexDirection: 'column',alignItems: 'flex-end', width: '100%', height: '100%', zIndex: 2, backgroundColor: '#000'}} >
+                    <View style={{position: 'absolute' , bottom: 0, width: '100%', flexDirection: 'row', alignItems: 'center',justifyContent: 'space-between', paddingLeft: '5%', paddingRight: '5%', zIndex: 5}}>
+                        <TouchableOpacity style={styles.backButton} onPress={this.tryAgain}>
+                            <Text style={styles.buttonText}>Opnieuw</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
-                            <Text style={styles.buttonText}>Overslaan</Text>
+                            <Text style={styles.buttonText}>Volgende</Text>
                         </TouchableOpacity>
                     </View>
-                    <Image style={{width: '100%', height: '100%', zIndex: 2}} resizeMode="cover"  source={{uri: 'data:image/png;base64,' + this.state.base64Icon }}/>
+                    <Image style={{width: '100%', height: '100%', zIndex: 2}} resizeMode="contain"  source={{uri: this.state.photo.uri }}/>
                     
                 </View>
             </View>

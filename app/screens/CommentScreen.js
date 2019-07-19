@@ -76,7 +76,7 @@ class CommentScreen extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <Text style={styles.heading}>Report a problem</Text>
+                    <Text style={styles.heading}>Meld een Probleem</Text>
                     <Text style={styles.heading}>4/4</Text>
                 </View>
 
