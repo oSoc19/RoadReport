@@ -13,7 +13,7 @@ Localization.init({
         nl: nl,
         en: en,
     },
-    currentLocale: 'en',
+    currentLocale: 'nl',
     fallbackLocale: 'en',
 });
 

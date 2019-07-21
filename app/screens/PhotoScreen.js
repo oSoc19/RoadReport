@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, TextInput, Text, TouchableOpacity, Alert, Image} from 'react-native'
+import { View, TextInput, Text, TouchableOpacity, Alert, Image, AsyncStorage} from 'react-native'
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 
@@ -15,7 +15,7 @@ class PhotoScreen extends Component {
             type: Camera.Constants.Type.back,
             photo: {
                 uri: null,
-                base64: null,
+                base64: "",
                 display: "none",
             }
         };
@@ -26,12 +26,21 @@ class PhotoScreen extends Component {
         this.setState({ hasCameraPermission: status === 'granted' });
     }
 
-    postToApi = () => {
+    goNext = () => {
+        this._storeData()
         Actions.comment()
     }
 
     goBack = () => {
         Actions.pop()
+    }
+
+    _storeData = async () => {
+        try {
+            AsyncStorage.setItem(Storage.PHOTO, this.state.photo.base64)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     handleCameraRef = (camera) => {
@@ -59,7 +68,7 @@ class PhotoScreen extends Component {
         this.setState({
             photo: {
                 uri: null,
-                base64: null,
+                base64: "",
                 display: "none",
             }
         })
@@ -97,7 +106,7 @@ class PhotoScreen extends Component {
                             <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
                                 <Text style={styles.buttonText}>Terug</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
+                            <TouchableOpacity style={styles.submitButton} onPress={this.goNext}>
                                 <Text style={styles.buttonText}>Overslaan</Text>
                             </TouchableOpacity>
                         </View>
@@ -108,7 +117,7 @@ class PhotoScreen extends Component {
                         <TouchableOpacity style={styles.backButton} onPress={this.tryAgain}>
                             <Text style={styles.buttonText}>Opnieuw</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
+                        <TouchableOpacity style={styles.submitButton} onPress={this.goNext}>
                             <Text style={styles.buttonText}>Volgende</Text>
                         </TouchableOpacity>
                     </View>
