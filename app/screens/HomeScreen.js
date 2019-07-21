@@ -25,21 +25,19 @@ class HomeScreen extends Component {
         }
     }
 
-    postToApi = async() => {
+    goNext = async() => {
         this._storeData()
-
         Actions.address()
     }
 
     _storeData = async () => {
-        console.log('in function')
         try {
             AsyncStorage.setItem(Storage.PROBLEM, this.state.problem)
-            .then(console.log('storage set'))
+            AsyncStorage.setItem(Storage.CATEGORY, this.state.category)
         } catch (error) {
           console.log(error)
         }
-      };
+      }
 
     render() {
 
@@ -200,7 +198,7 @@ class HomeScreen extends Component {
                             </View>
                         </View>
 
-                            <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
+                            <TouchableOpacity style={styles.submitButton} onPress={this.goNext}>
                                 <Text style={styles.buttonText}>{t('general.next')}</Text>
                             </TouchableOpacity>
 

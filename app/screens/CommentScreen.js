@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert} from 'react-native'
+import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert, AsyncStorage} from 'react-native'
 
 //modules
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -17,10 +17,14 @@ class CommentScreen extends Component {
             number: "",
             city: "",
             category: "",
+            lat: "",
+            lng: "",
+            photo: "",
         }
     }
 
     postToApi = async() => {
+        await this._retrieveData()
         /*const url = "https://tmaas.m-leroy.pro/problem/send"
 
         if(this.state.problem == "" || this.state.street == "" || this.state.city == "" || this.state.street == "") {
@@ -63,6 +67,7 @@ class CommentScreen extends Component {
             }))
             .then(console.log(this.state.status))
             .catch(error => console.error('Error:', error))*/
+
             Actions.completed()
         //}
     }
@@ -71,8 +76,34 @@ class CommentScreen extends Component {
         Actions.pop()
     }
 
-    render() {
+    _retrieveData = async () => {
+        try {
+            const category = await AsyncStorage.getItem(Storage.CATEGORY)
+            const problem = await AsyncStorage.getItem(Storage.PROBLEM)
+            const lat = await AsyncStorage.getItem(Storage.LAT)
+            const lng = await AsyncStorage.getItem(Storage.LNG)
+            const street = await AsyncStorage.getItem(Storage.STREET)
+            const city = await AsyncStorage.getItem(Storage.CITY)
+            const number = await AsyncStorage.getItem(Storage.NUMBER)
+            const photo = await AsyncStorage.getItem(Storage.PHOTO)
 
+            this.setState({
+                category: category,
+                problem: problem,
+                lat: lat,
+                lng: lng,
+                street: street,
+                city: city,
+                number: number,
+                photo: photo,
+            })
+                
+        } catch (error) {
+            // Error retrieving data
+        }
+    };
+
+    render() {
         return (
             <View style={styles.container}>
                 <View style={styles.header}>

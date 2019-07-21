@@ -15,10 +15,6 @@ class AddressScreen extends Component {
             street: "",
             number: "",
             city: "",
-            marker: {
-                latitude: 51.05,
-                longitude: 3.73,
-            },
             region: {
                 latitude: 51.05,
                 longitude: 3.73,
@@ -28,7 +24,8 @@ class AddressScreen extends Component {
         }
     }
 
-    postToApi = () => {
+    goNext = () => {
+        this._storeData()
         Actions.photo()
     }
 
@@ -36,30 +33,22 @@ class AddressScreen extends Component {
         Actions.pop()
     }
 
-    _retrieveData = async () => {
+    _storeData = async () => {
         try {
-            console.log('in function')
-          const value = await AsyncStorage.getItem(Storage.PROBLEM)
-          if (value !== null) {
-            // We have data!!
-            console.log(value);
-          }
-          else
-            console.log('no value')
+            AsyncStorage.setItem(Storage.STREET, this.state.street)
+            AsyncStorage.setItem(Storage.CITY, this.state.city)
+            AsyncStorage.setItem(Storage.NUMBER, this.state.number)
+            AsyncStorage.setItem(Storage.LAT, this.state.region.latitude.toString())
+            AsyncStorage.setItem(Storage.LNG, this.state.region.longitude.toString())
         } catch (error) {
-          // Error retrieving data
+        console.log(error)
         }
-      };
+    }
 
     getLocation = () => {
-        this._retrieveData()
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.setState({
-                    marker: {
-                        latitude: position.coords.latitude,
-                        longitude: position.coords.longitude,
-                    },
                     region: {
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude,
@@ -70,7 +59,7 @@ class AddressScreen extends Component {
             },
             (error) =>
                 console.log(error),
-            { enableHighAccuracy: false, timeout: 1000, maximumAge: 1000 },
+            { enableHighAccuracy: true, timeout: 1000, maximumAge: 1000 },
         )
     }
 
@@ -141,7 +130,7 @@ class AddressScreen extends Component {
                                 <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
                                     <Text style={styles.buttonText}>Terug</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
+                                <TouchableOpacity style={styles.submitButton} onPress={this.goNext}>
                                     <Text style={styles.buttonText}>Volgende</Text>
                                 </TouchableOpacity>
                             </View>
