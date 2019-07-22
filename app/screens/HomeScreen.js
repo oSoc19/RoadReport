@@ -199,50 +199,46 @@ class HomeScreen extends Component {
                     <Text style={styles.heading}>Meld een Probleem</Text>
                     <Text style={styles.heading}>1/4</Text>
                 </View>
-
-                <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}> 
-                    <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
-                        <View style={{flex: 1}}>
+                <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
+                    <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}> 
+                        <View style={styles.commentContainer}>
+                            <Text style={styles.label}>Kies een probleem uit de lijst</Text>
+                            <Dropdown
+                                onChangeText={(value) => this.setState({category: value})}
+                                baseColor={"#0A0A0A"}
+                                labelFontSize={18}
+                                label='Categorie'
+                                data={categories}
+                                itemCount={16}
+                            />
+                            <Dropdown
+                                onChangeText={(value) => {setProblem(value)}}
+                                baseColor={"#0A0A0A"}
+                                labelFontSize={18}
+                                label='Probleem'
+                                data={events}
+                                itemCount={16}
+                            />
+                        </View>
+                        <View style={{display: this.state.otherBoxDisplayState, flex: 1}}>
                             <View style={styles.commentContainer}>
-                                <Text style={styles.label}>Kies een probleem uit de lijst</Text>
-                                <Dropdown
-                                    onChangeText={(value) => this.setState({category: value})}
-                                    baseColor={"#0A0A0A"}
-                                    labelFontSize={18}
-                                    label='Categorie'
-                                    data={categories}
-                                    itemCount={16}
+                                <Text style={styles.label}>Wat is het probleem?</Text>
+                                <TextInput
+                                    placeholder = {"Beschrijf het probleem..."}
+                                    onChangeText={(otherProblem) => this.setState({otherProblem})}
+                                    value={this.state.otherProblem}
+                                    editable = {true}
+                                    maxLength = {255}
+                                    style={styles.textInput}
                                 />
-                                <Dropdown
-                                    onChangeText={(value) => {setProblem(value)}}
-                                    baseColor={"#0A0A0A"}
-                                    labelFontSize={18}
-                                    label='Probleem'
-                                    data={events}
-                                    itemCount={16}
-                                />
-                            </View>
-                            <View style={{display: this.state.otherBoxDisplayState, flex: 1}}>
-                                <View style={styles.commentContainer}>
-                                    <Text style={styles.label}>Wat is het probleem?</Text>
-                                    <TextInput
-                                        placeholder = {"Beschrijf het probleem..."}
-                                        onChangeText={(otherProblem) => this.setState({otherProblem})}
-                                        value={this.state.otherProblem}
-                                        editable = {true}
-                                        maxLength = {255}
-                                        style={styles.textInput}
-                                    />
-                                </View>
                             </View>
                         </View>
+                    </KeyboardAvoidingView>
+                </ScrollView>
 
-                            <TouchableOpacity style={styles.submitButton} onPress={this.goNext}>
-                                <Text style={styles.buttonText}>{t('general.next')}</Text>
-                            </TouchableOpacity>
-
-                    </ScrollView>
-                </KeyboardAvoidingView>
+                <TouchableOpacity style={styles.submitButton} onPress={this.goNext}>
+                    <Text style={styles.buttonText}>{t('general.next')}</Text>
+                </TouchableOpacity>
 
             </View>
         );

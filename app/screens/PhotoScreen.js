@@ -36,7 +36,10 @@ class PhotoScreen extends Component {
 
     _storeData = async () => {
         try {
-            AsyncStorage.setItem(Storage.PHOTO, this.state.photo.uri)
+            if(this.state.photo.uri != null)
+                AsyncStorage.setItem(Storage.PHOTO, this.state.photo.uri)
+            else
+                AsyncStorage.setItem(Storage.PHOTO, "")
         } catch (error) {
             console.log(error)
         }
