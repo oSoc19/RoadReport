@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert, AsyncStorage} from 'react-native'
 
 //modules
-import EStyleSheet from 'react-native-extended-stylesheet';
+import EStyleSheet from 'react-native-extended-stylesheet'
 import {Actions} from 'react-native-router-flux'
 
 class CommentScreen extends Component {
