@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, AsyncStorage, Image} from 'react-native'
+import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, AsyncStorage, Image, ActivityIndicator} from 'react-native'
 
 //modules
 import EStyleSheet from 'react-native-extended-stylesheet'
@@ -12,6 +12,7 @@ class AddressScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loadingLocation: "none",
             street: "",
             number: "",
             city: "",
@@ -82,6 +83,9 @@ class AddressScreen extends Component {
     }
 
     getLocation = () => {
+        this.setState({
+            loadingLocation: "flex",
+        })
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.setState({
@@ -91,12 +95,14 @@ class AddressScreen extends Component {
                         latitudeDelta: 0.0032,
                         longitudeDelta: 0.0011,
                     },
-                });
+                }, this.setState({
+        loadingLocation: "none",
+        }));
                 this.getAddressWithCoordinates(position.coords.latitude, position.coords.longitude)
             },
             (error) =>
                 console.log(error),
-            { enableHighAccuracy: false, timeout: 1000, maximumAge: 1000 },
+            { enableHighAccuracy: true, timeout: 1000, maximumAge: 1000 },
         )
     }
 
@@ -175,6 +181,9 @@ class AddressScreen extends Component {
                     <TouchableOpacity style={styles.submitButton} onPress={this.goNext}>
                         <Text style={styles.buttonText}>Volgende</Text>
                     </TouchableOpacity>
+                </View>
+                <View style={{flex:1, display: this.state.loadingLocation, position: 'absolute', justifyContent:'space-around', alignItems: 'center', width: '100%', height: '100%', backgroundColor: '#FFF', opacity: 0.5}} >
+                    <ActivityIndicator animating={true} size="large" color="#000" />
                 </View>
             </View>
         );
