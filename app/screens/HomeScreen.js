@@ -32,7 +32,7 @@ class HomeScreen extends Component {
 
     _storeData = async () => {
         try {
-            AsyncStorage.setItem(Storage.PROBLEM, this.state.problem)
+            AsyncStorage.setItem(Storage.PROBLEM, this.state.problem.toString())
             AsyncStorage.setItem(Storage.CATEGORY, this.state.category)
         } catch (error) {
           console.log(error)
@@ -60,80 +60,110 @@ class HomeScreen extends Component {
             case 'Fietspad/voetpad':
                 events = [{
                     value: 'Gat in het voetpad',
+                    index: 1
                     }, {
                     value: 'Gat in het fietspad',
+                    index: 2
                     }, {
                     value: 'Beschadiging van het voetpad',
+                    index: 3
                     },{
                     value: 'Beschadiging van het fietspad',
+                    index: 4
                     },{
                     value: 'Markering zebrapad',
+                    index: 5
                     },{
                     value: 'Markering fietspad',
+                    index: 6
                     },{
                     value: 'Sneeuw, ijzel, gladheid',
+                    index: 7
                     },{
                     value: 'Glas ',
+                    index: 8
                     },{
                     value: 'Blindengeleidelijnen versperd',
+                    index: 9
                     },{
                     value: 'Hinderlijke inname van voetpad',
+                    index: 10
                     },{
                     value: 'Hinderlijke inname van fietspad',
+                    index: 11
                     },];
                 break;
             
             case 'Signalisatie':
                 events = [{
                     value: 'Bord weg/verplaatst',
+                    index: 12
                     }, {
                     value: 'Verkeerslicht defect',
+                    index: 13
                     }, {
                     value: 'Drukknop verkeerslicht defect',
+                    index: 14
                     },{
                     value: 'Probleem met verkeersgeleidingssysteem bord',
+                    index: 15
                     },{
                     value: 'Fietstelpaal defect',
+                    index: 16
                     },];
                 break;
         
             case 'Fietsenstalling':
                 events = [{
                     value: 'Overvol',
+                    index: 17
                     }, {
                     value: 'Te herstellen',
+                    index: 18
                     }, {
                     value: 'Onkruid / zwerfvuil',
+                    index: 19
                     },{
                     value: 'Achtergelaten fietsen',
+                    index: 20
                     },{
                     value: 'Suggestie voor locatie overdekte/inpandige fietsenstalling',
+                    index: 21
                     },];
                 break;
         
             case 'Fietsinfrastructuur':
                 events = [{
                     value: 'Fietspomp kapot',
+                    index: 22
                     }, {
                     value: 'Herstelzuil kapot',
+                    index: 23
                     }, {
                     value: 'Fietslichtjes automaat leeg/kapot',
+                    index: 24
                     },];
                 break;
 
             case 'Andere':
                 events = [{
                     value: 'Ontoegankelijk voetpad voor rolstoelgebruikers',
+                    index: 25
                     }, {
                     value: 'Gevaarlijk kruispunt voor fietsers/voetgangers',
+                    index: 26
                     }, {
                     value: 'Gevaarlijke situatie voor fietsers/voetgangers',
+                    index: 27
                     },{
                     value: 'Defecte/ontbrekende straatverlichting ',
+                    index: 28
                     }, {
                     value: 'Drukte op het voetpad',
+                    index: 29
                     }, {
                     value: 'Andere',
+                    index: 30
                     },];
                 break;
         
@@ -142,8 +172,15 @@ class HomeScreen extends Component {
             
             }
 
-            checkForOther = (value) => {
-                this._storeData()
+            setProblem = (value) => {
+                events.forEach(event => {
+                    if(event.value == value) {
+                        this.setState({
+                            problem: event.index
+                        })
+                    }
+                });
+
                 if(value == 'Andere')
                     this.setState({
                         otherBoxDisplayState: 'flex'
@@ -152,6 +189,8 @@ class HomeScreen extends Component {
                     this.setState({
                         otherBoxDisplayState: 'none'
                     })
+
+                console.log(this.state.problem)
             }
 
         return (
@@ -175,7 +214,7 @@ class HomeScreen extends Component {
                                     itemCount={16}
                                 />
                                 <Dropdown
-                                    onChangeText={(value) => {this.setState({problem: value}); checkForOther(value)}}
+                                    onChangeText={(value) => {setProblem(value)}}
                                     baseColor={"#0A0A0A"}
                                     labelFontSize={18}
                                     label='Probleem'
