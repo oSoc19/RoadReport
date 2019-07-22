@@ -51,11 +51,31 @@ class AddressScreen extends Component {
             'https://tmaas.m-leroy.pro/best@/reverse?point.lat=' + lat + '&point.lon=' + lng,
             )
             let responseJson = await response.json()
-            this.setState({
-                street: responseJson.features[0].properties.street,
-                city: responseJson.features[0].properties.county,
-                number: responseJson.features[0].properties.housenumber
-            })
+
+            if(responseJson.features[0].properties.street != null) {
+                this.setState({
+                    street: responseJson.features[0].properties.street
+                })
+            }
+            else
+                this.state.street = ""
+
+            if(responseJson.features[0].properties.county != null) {
+                this.setState({
+                    city: responseJson.features[0].properties.county
+                })
+            }
+            else
+                this.state.city = ""
+
+            if(responseJson.features[0].properties.housenumber != null) {
+                this.setState({
+                    number: responseJson.features[0].properties.housenumber
+                })
+            }
+            else
+                this.state.number = ""
+
         } catch (error) {
             console.error(error)
         }
@@ -97,70 +117,65 @@ class AddressScreen extends Component {
                     <Text style={styles.heading}>2/4</Text>
                 </View>
 
-                <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}> 
-                    <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
-
-                        <View style={{height: "70%"}}>
-                            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                                <MapView
-                                    style={styles.mapContainer}
-                                    region={this.state.region}
-                                    onRegionChangeComplete={this.onRegionChange}
-                                />
-                                <View pointerEvents="none" style={{width: 50, height: 100, justifyContent: 'space-around', alignItems: 'center', paddingBottom: 50, position: 'absolute', elevation: 36}}>
-                                    <Image
-                                        style={{width: 50, height: 50}}
-                                        source={require('../assets/marker.png')}
-                                    />
-                                </View>
-                            </View>
-                            <View style={styles.commentContainer}>
-                                <Text style={styles.label}>Adres</Text>
-                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                    <TextInput
-                                        placeholder = {"Straat"}
-                                        onChangeText={(street) => this.setState({street})}
-                                        value={this.state.street}
-                                        editable = {true}
-                                        maxLength = {255}
-                                        style={styles.streetInput}
-                                    />
-                                    <TextInput
-                                        keyboardType={"numeric"} 
-                                        placeholder = {"Huisnummer"}
-                                        onChangeText={(number) => this.setState({number})}
-                                        value={this.state.number}
-                                        editable = {true}
-                                        maxLength = {255}
-                                        style={styles.numberInput}
-                                    />
-                                </View>
+                <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
+                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                        <MapView
+                            style={styles.mapContainer}
+                            region={this.state.region}
+                            onRegionChangeComplete={this.onRegionChange}
+                        />
+                        <View pointerEvents="none" style={{width: 50, height: 100, justifyContent: 'space-around', alignItems: 'center', paddingBottom: 50, position: 'absolute', elevation: 36}}>
+                            <Image
+                                style={{width: 50, height: 50}}
+                                source={require('../assets/marker.png')}
+                            />
+                        </View>
+                    </View>
+                    <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}>
+                        <View style={styles.commentContainer}>
+                            <Text style={styles.label}>Adres</Text>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                                 <TextInput
-                                    placeholder = {"Stad"}
-                                    onChangeText={(city) => this.setState({city})}
-                                    value={this.state.city}
+                                    placeholder = {"Straat"}
+                                    onChangeText={(street) => this.setState({street})}
+                                    value={this.state.street}
                                     editable = {true}
                                     maxLength = {255}
-                                    style={styles.textInput}
+                                    style={styles.streetInput}
+                                />
+                                <TextInput
+                                    keyboardType={"numeric"} 
+                                    placeholder = {"Huisnummer"}
+                                    onChangeText={(number) => this.setState({number})}
+                                    value={this.state.number}
+                                    editable = {true}
+                                    maxLength = {255}
+                                    style={styles.numberInput}
                                 />
                             </View>
-                            <TouchableOpacity style={styles.locationButton} onPress={this.getLocation}>
-                                <Text style={styles.buttonText}>Gebruik huidige locatie</Text>
-                            </TouchableOpacity>
+                            <TextInput
+                                placeholder = {"Stad"}
+                                onChangeText={(city) => this.setState({city})}
+                                value={this.state.city}
+                                editable = {true}
+                                maxLength = {255}
+                                style={styles.textInput}
+                            />
                         </View>
-
-                            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: '5%', marginRight: '5%'}}>
-                                <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
-                                    <Text style={styles.buttonText}>Terug</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.submitButton} onPress={this.goNext}>
-                                    <Text style={styles.buttonText}>Volgende</Text>
-                                </TouchableOpacity>
-                            </View>
-
+                        <TouchableOpacity style={styles.locationButton} onPress={this.getLocation}>
+                            <Text style={styles.buttonText}>Gebruik huidige locatie</Text>
+                        </TouchableOpacity>
+                    </KeyboardAvoidingView>
                 </ScrollView>
-                </KeyboardAvoidingView>
 
+                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: '5%', marginRight: '5%',}}>
+                    <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
+                        <Text style={styles.buttonText}>Terug</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.submitButton} onPress={this.goNext}>
+                        <Text style={styles.buttonText}>Volgende</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     }
@@ -214,7 +229,7 @@ const styles = EStyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
         width: '100%',
-        height: '50%',
+        height: '40%',
     },
     heading: {
         paddingBottom: 8,

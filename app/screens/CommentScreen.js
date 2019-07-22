@@ -48,7 +48,6 @@ class CommentScreen extends Component {
               );
         }*/
         //else {
-            console.log('trying to send data')
             let data = 
             {
                 "report": 
@@ -94,7 +93,6 @@ class CommentScreen extends Component {
     }
 
     _retrieveData = async () => {
-        console.log('retrieving data')
         try {
             const category = await AsyncStorage.getItem(Storage.CATEGORY)
             const problem = await AsyncStorage.getItem(Storage.PROBLEM)
@@ -119,7 +117,6 @@ class CommentScreen extends Component {
         } catch (error) {
             // Error retrieving data
         }
-        console.log('retrieved data')
     };
 
     render() {
@@ -130,9 +127,10 @@ class CommentScreen extends Component {
                     <Text style={styles.heading}>4/4</Text>
                 </View>
 
-                <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}> 
-                    <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
-                        <View style={{flex: 1}}>
+                
+                <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
+                    <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}> 
+                         <View style={{flex: 1}}>
                             <View style={styles.commentContainer}>
                                 <Text style={styles.label}>Heb je meer info over het probleem?</Text>
                                 <TextInput
@@ -156,19 +154,17 @@ class CommentScreen extends Component {
                                 />
                             </View>
                         </View>
-                    
-
-                            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: '5%', marginRight: '5%'}}>
-                                <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
-                                    <Text style={styles.buttonText}>Back</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
-                                    <Text style={styles.buttonText}>Verzend</Text>
-                                </TouchableOpacity>
-                            </View>
-
+                    </KeyboardAvoidingView>
                 </ScrollView>
-                </KeyboardAvoidingView>
+
+                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: '5%', marginRight: '5%'}}>
+                    <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
+                        <Text style={styles.buttonText}>Back</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
+                        <Text style={styles.buttonText}>Verzend</Text>
+                    </TouchableOpacity>
+                </View>
 
             </View>
         );
