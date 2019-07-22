@@ -15,7 +15,6 @@ class PhotoScreen extends Component {
             type: Camera.Constants.Type.back,
             photo: {
                 uri: null,
-                base64: "",
                 display: "none",
             }
         };
@@ -37,7 +36,7 @@ class PhotoScreen extends Component {
 
     _storeData = async () => {
         try {
-            AsyncStorage.setItem(Storage.PHOTO, this.state.photo.base64)
+            AsyncStorage.setItem(Storage.PHOTO, this.state.photo.uri)
         } catch (error) {
             console.log(error)
         }
@@ -49,14 +48,13 @@ class PhotoScreen extends Component {
 
     snap = () => {
         if (this.camera) {
-            const options = { quality: 1, base64: true, fixOrientation: true, exif: true, skipProcessing: false};
+            const options = { quality: 0.01, base64: false, fixOrientation: true, exif: true, skipProcessing: false};
             this.camera.takePictureAsync(options)
                 .then(photo => {
                     photo.exif.Orientation = 1;
                     this.setState({
                         photo: {
                             uri: photo.uri,
-                            base64: photo.base64,
                             display: "flex",
                         }
                     })
@@ -68,7 +66,6 @@ class PhotoScreen extends Component {
         this.setState({
             photo: {
                 uri: null,
-                base64: "",
                 display: "none",
             }
         })

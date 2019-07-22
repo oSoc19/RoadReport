@@ -25,9 +25,15 @@ class CommentScreen extends Component {
 
     postToApi = async() => {
         await this._retrieveData()
-        /*const url = "https://tmaas.m-leroy.pro/problem/send"
+        const url = "https://tmaas.m-leroy.pro/problem/send"
+        const file = {
+            uri: this.state.photo,
+            name: 'reported picture',
+            type: 'image/jpeg'
+        }
+        let formData = new FormData()
 
-        if(this.state.problem == "" || this.state.street == "" || this.state.city == "" || this.state.street == "") {
+        /*if(this.state.problem == "" || this.state.street == "" || this.state.city == "" || this.state.street == "") {
             Alert.alert(
                 'Alert',
                 'Please fill in the required fields.',
@@ -40,43 +46,55 @@ class CommentScreen extends Component {
                 ],
                 {cancelable: false},
               );
-        }
-        else {
-            var data = {
-                "report": {
+        }*/
+        //else {
+            console.log('trying to send data')
+            let data = 
+            {
+                "report": 
+                {
                     "problem": this.state.problem,
                     "comment": this.state.comment,
-                    "location": {
+                    "location":
+                    {
                         "street": this.state.street,
                         "number": this.state.number,
                         "city": this.state.city,
-                    },
+                        "longitude": this.state.lng,
+                        "latitude" : this.state.lat
+                    }
                 }
             }
+
+            formData.append('file', file)
+            formData.append('data', JSON.stringify(data))
+
+        //}
             
             await fetch(url, {
                 method: 'POST',
-                body: JSON.stringify(data),
+                body: formData,
                 headers:{
-                'Content-Type': 'application/json'
+                'Content-Type': 'multipart/form-data'
                 }
             })
-            .then(res => res.json())
+            .then(res => console.log(res))
             .then(async(response) => await this.setState({
                 status: response
             }))
             .then(console.log(this.state.status))
-            .catch(error => console.error('Error:', error))*/
+            .catch(error => console.error('Error:', error))
 
             Actions.completed()
-        //}
-    }
+        }
+    //}
 
     goBack = () => {
         Actions.pop()
     }
 
     _retrieveData = async () => {
+        console.log('retrieving data')
         try {
             const category = await AsyncStorage.getItem(Storage.CATEGORY)
             const problem = await AsyncStorage.getItem(Storage.PROBLEM)
@@ -101,6 +119,7 @@ class CommentScreen extends Component {
         } catch (error) {
             // Error retrieving data
         }
+        console.log('retrieved data')
     };
 
     render() {

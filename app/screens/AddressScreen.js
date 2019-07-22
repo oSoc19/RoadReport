@@ -45,6 +45,22 @@ class AddressScreen extends Component {
         }
     }
 
+    getAddressWithCoordinates = async(lat, lng) => {
+        try {
+            let response = await fetch(
+            'https://tmaas.m-leroy.pro/best@/reverse?point.lat=' + lat + '&point.lon=' + lng,
+            )
+            let responseJson = await response.json()
+            this.setState({
+                street: responseJson.features[0].properties.street,
+                city: responseJson.features[0].properties.county,
+                number: responseJson.features[0].properties.housenumber
+            })
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     getLocation = () => {
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -56,15 +72,22 @@ class AddressScreen extends Component {
                         longitudeDelta: 0.0011,
                     },
                 });
+                this.getAddressWithCoordinates(position.coords.latitude, position.coords.longitude)
             },
             (error) =>
                 console.log(error),
-            { enableHighAccuracy: true, timeout: 1000, maximumAge: 1000 },
+            { enableHighAccuracy: false, timeout: 1000, maximumAge: 1000 },
         )
     }
 
     onRegionChange = (region) => {
-      }
+        if(this.state.region != region) {
+        this.setState({
+            region: region
+        })
+        this.getAddressWithCoordinates(region.latitude, region.longitude)
+        }
+    }
 
     render() {
         return (
@@ -77,12 +100,12 @@ class AddressScreen extends Component {
                 <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}> 
                     <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
 
-                        <View style={{height: '70%'}}>
+                        <View style={{height: "70%"}}>
                             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                                 <MapView
                                     style={styles.mapContainer}
                                     region={this.state.region}
-                                    onRegionChange={this.onRegionChange}
+                                    onRegionChangeComplete={this.onRegionChange}
                                 />
                                 <View pointerEvents="none" style={{width: 50, height: 100, justifyContent: 'space-around', alignItems: 'center', paddingBottom: 50, position: 'absolute', elevation: 36}}>
                                     <Image
