@@ -59,7 +59,7 @@ class HomeScreen extends Component {
             AsyncStorage.setItem(Storage.PROBLEM, this.state.problem.toString())
             AsyncStorage.setItem(Storage.COMMENT, this.state.comment.toString())
         } catch (error) {
-          console.log(error)
+            console.log(error)
         }
       }
 
