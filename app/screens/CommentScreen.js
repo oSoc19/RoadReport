@@ -41,7 +41,7 @@ class CommentScreen extends Component {
         this.toggleLoadingAnimation()
 
         await this._retrieveData()
-        const url = "https://tmaas.m-leroy.pro/problem/send"
+        const url = "https://roadreport.osoc.be/problem/send"
 
         let file = ""
         if(this.state.photo != null) {
@@ -56,82 +56,78 @@ class CommentScreen extends Component {
 
         let formData = new FormData()
 
-        /*if(this.state.problem == "" || this.state.street == "" || this.state.city == "" || this.state.street == "") {
-            Alert.alert(
-                'Alert',
-                'Please fill in the required fields.',
+        let data = 
+        {
+            "report": 
+            {
+                "problem": this.state.problem,
+                "comment": this.state.comment,
+                "location":
+                {
+                    "street": this.state.street,
+                    "number": this.state.number,
+                    "city": this.state.city,
+                    "longitude": this.state.lng,
+                    "latitude" : this.state.lat
+                },
+                "email": this.state.email
+            }
+        }
+
+        formData.append('file', file)
+        formData.append('data', JSON.stringify(data))
+        
+        fetch(url, {
+            method: 'POST',
+            body: formData,
+            headers:{
+            'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then(res => res.json())
+        .then(json => this.setState({
+            status: json
+        }, () => {console.log(this.state.status)}))
+        .then(() => this.toggleLoadingAnimation())
+        .then(() => {
+            if(this.state.status.result == "success"){ 
+                Actions.completed() 
+            }
+            else {
+                Alert.alert(
+                'Oeps! Er ging iets mis!',
+                'Probeer het opnieuw.',
                 [
-                  {
+                {
                     text: 'Cancel',
-                    onPress: () => console.log('Cancel Pressed'),
                     style: 'cancel',
-                  },
+                },
                 ],
                 {cancelable: false},
-              );
-        }*/
-        //else {
-            let data = 
-            {
-                "report": 
-                {
-                    "problem": this.state.problem,
-                    "comment": this.state.comment,
-                    "location":
-                    {
-                        "street": this.state.street,
-                        "number": this.state.number,
-                        "city": this.state.city,
-                        "longitude": this.state.lng,
-                        "latitude" : this.state.lat
-                    }
-                }
+                )
             }
-
-            formData.append('file', file)
-            formData.append('data', JSON.stringify(data))
-
-        //}
-            
-            fetch(url, {
-                method: 'POST',
-                body: formData,
-                headers:{
-                'Content-Type': 'multipart/form-data'
-                }
-            })
-            .then(res => res.json())
-            .then(json => this.setState({
-                status: json
-            }, () => {console.log(this.state.status)}))
-            .then(() => this.toggleLoadingAnimation())
-            .then(() => {
-                if(this.state.status.result == "success"){ 
-                    Actions.completed() 
-                }
-                else {
-                    Alert.alert(
-                    'Oeps! Er ging iets mis!',
-                    'Probeer het opnieuw.',
-                    [
-                    {
-                        text: 'Cancel',
-                        style: 'cancel',
-                    },
-                    ],
-                    {cancelable: false},
-                    )
-                }
-            })
-            .catch(error => console.error('Error:', error))
-        }
-    //}
+        })
+        .catch(error => console.error('Error:', error))
+    }
 
     goBack = () => {
         Actions.pop()
     }
 
-    _retrieveData = async () => {
+    lookForEmail = async() => {
+        try {
+            const email = await AsyncStorage.getItem(Storage.EMAIL)
+            if(email != null) {
+                this.setState({
+                    email: email
+                })
+            }
+        } catch (error) {
+
+        }
+    }
+
+    _retrieveData = async() => {
         try {
             const category = await AsyncStorage.getItem(Storage.CATEGORY)
             const problem = await AsyncStorage.getItem(Storage.PROBLEM)
@@ -141,6 +137,9 @@ class CommentScreen extends Component {
             const city = await AsyncStorage.getItem(Storage.CITY)
             const number = await AsyncStorage.getItem(Storage.NUMBER)
             const photo = await AsyncStorage.getItem(Storage.PHOTO)
+            const comment = await AsyncStorage.getItem(Storage.COMMENT)
+
+            AsyncStorage.setItem(Storage.EMAIL, this.state.email.toString())
 
             this.setState({
                 category: category,
@@ -151,6 +150,7 @@ class CommentScreen extends Component {
                 city: city,
                 number: number,
                 photo: photo,
+                comment: comment,
             })
                 
         } catch (error) {
@@ -159,6 +159,7 @@ class CommentScreen extends Component {
     };
 
     render() {
+        this.lookForEmail()
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
@@ -170,17 +171,6 @@ class CommentScreen extends Component {
                 <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
                     <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}> 
                          <View style={{flex: 1}}>
-                            <View style={styles.commentContainer}>
-                                <Text style={styles.label}>Heb je meer info over het probleem?</Text>
-                                <TextInput
-                                    placeholder = {"Beschrijf het probleem..."}
-                                    onChangeText={(comment) => this.setState({comment})}
-                                    value={this.state.comment}
-                                    editable = {true}
-                                    maxLength = {255}
-                                    style={styles.textInput}
-                                />
-                            </View>
                             <View style={styles.commentContainer}>
                                 <Text style={styles.label}>Laat je Email achter als je updates over het probleem wilt ontvangen</Text>
                                 <TextInput

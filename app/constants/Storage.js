@@ -7,4 +7,6 @@ export default Storage = {
     LAT: 'LAT',
     LNG: 'LNG',
     PHOTO: 'PHOTO',
+    COMMENT: 'COMMENT',
+    EMAIL: 'EMAIL',
 }

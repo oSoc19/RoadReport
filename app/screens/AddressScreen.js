@@ -34,8 +34,22 @@ class AddressScreen extends Component {
     }
 
     goNext = () => {
-        this._storeData()
-        Actions.photo()
+        if(this.state.street != "" && this.state.number != "" && this.state.city != "" ) {
+            this._storeData()
+            Actions.photo()
+        } else {
+            Alert.alert(
+                'Adres niet volledig',
+                'Gelieve het adres volledig in te vullen alvorens door te gaan.',
+                [
+                  {
+                    text: 'Cancel',
+                    style: 'cancel',
+                  },
+                ],
+                {cancelable: false},
+            )
+        }
     }
 
     goBack = () => {
@@ -69,7 +83,7 @@ class AddressScreen extends Component {
     getAddressWithCoordinates = async(lat, lng) => {
         try {
             let response = await fetch(
-            'https://tmaas.m-leroy.pro/best@/reverse?point.lat=' + lat + '&point.lon=' + lng,
+            'https://roadreport.osoc.be//best@/reverse?point.lat=' + lat + '&point.lon=' + lng,
             )
             let responseJson = await response.json()
 
