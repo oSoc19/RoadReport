@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, AsyncStorage} from 'react-native'
+import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, AsyncStorage, Alert} from 'react-native'
 
 import { t } from '../localization/Localization';
 //modules
@@ -26,14 +26,27 @@ class HomeScreen extends Component {
     }
 
     goNext = async() => {
-        this._storeData()
-        Actions.address()
+        if(this.state.problem == "" || this.state.problem == null) {
+            Alert.alert(
+                'Geen probleem gekozen',
+                'Gelieve een probleem te kiezen alvorens door te gaan.',
+                [
+                  {
+                    text: 'Cancel',
+                    style: 'cancel',
+                  },
+                ],
+                {cancelable: false},
+            )
+        } else {
+            this._storeData()
+            Actions.address()
+        }
     }
 
     _storeData = async () => {
         try {
             AsyncStorage.setItem(Storage.PROBLEM, this.state.problem.toString())
-            AsyncStorage.setItem(Storage.CATEGORY, this.state.category)
         } catch (error) {
           console.log(error)
         }
@@ -189,8 +202,6 @@ class HomeScreen extends Component {
                     this.setState({
                         otherBoxDisplayState: 'none'
                     })
-
-                console.log(this.state.problem)
             }
 
         return (

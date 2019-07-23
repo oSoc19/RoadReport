@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, AsyncStorage, Image, ActivityIndicator} from 'react-native'
+import * as Permissions from 'expo-permissions';
+import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, AsyncStorage, Image, ActivityIndicator, Alert} from 'react-native'
 
 //modules
 import EStyleSheet from 'react-native-extended-stylesheet'
@@ -12,7 +13,8 @@ class AddressScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loadingLocation: "none",
+            loadingDisplay: "none",
+            hasLocationPermission: null,
             street: "",
             number: "",
             city: "",
@@ -23,6 +25,12 @@ class AddressScreen extends Component {
                 longitudeDelta: 0.0421,
             }
         }
+    }
+
+    async componentDidMount() {
+        console.log(this.state.loadingDisplay)
+        const { status } = await Permissions.askAsync(Permissions.LOCATION);
+        this.setState({ hasLocationPermission: status === 'granted' });
     }
 
     goNext = () => {
@@ -46,6 +54,18 @@ class AddressScreen extends Component {
         }
     }
 
+    toggleLoadingAnimation = () => {
+        if(this.state.loadingDisplay == "none") {
+            this.setState({
+                loadingDisplay: "flex"
+            })
+        }else {
+            this.setState({
+                loadingDisplay: "none"
+            })
+        }
+    }
+
     getAddressWithCoordinates = async(lat, lng) => {
         try {
             let response = await fetch(
@@ -61,9 +81,9 @@ class AddressScreen extends Component {
             else
                 this.state.street = ""
 
-            if(responseJson.features[0].properties.county != null) {
+            if(responseJson.features[0].properties.locality != null) {
                 this.setState({
-                    city: responseJson.features[0].properties.county
+                    city: responseJson.features[0].properties.locality
                 })
             }
             else
@@ -83,27 +103,38 @@ class AddressScreen extends Component {
     }
 
     getLocation = () => {
-        this.setState({
-            loadingLocation: "flex",
-        })
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                this.setState({
-                    region: {
-                        latitude: position.coords.latitude,
-                        longitude: position.coords.longitude,
-                        latitudeDelta: 0.0032,
-                        longitudeDelta: 0.0011,
-                    },
-                }, this.setState({
-        loadingLocation: "none",
-        }));
-                this.getAddressWithCoordinates(position.coords.latitude, position.coords.longitude)
-            },
-            (error) =>
-                console.log(error),
-            { enableHighAccuracy: true, timeout: 1000, maximumAge: 1000 },
-        )
+        if(this.state.hasLocationPermission) {
+            this.toggleLoadingAnimation()
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    this.setState({
+                        region: {
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude,
+                            latitudeDelta: 0.0032,
+                            longitudeDelta: 0.0011,
+                        },
+                    }, this.toggleLoadingAnimation());
+                    this.getAddressWithCoordinates(position.coords.latitude, position.coords.longitude)
+                },
+                (error) =>
+                    console.log(error),
+                { enableHighAccuracy: false, timeout: 1000, maximumAge: 1000 },
+            )
+        } else {
+            Alert.alert(
+                'Geen toestemming tot locatie',
+                'Ga naar je instellingen en sta locatie toe bij gebruik van deze app.',
+                [
+                  {
+                    text: 'Cancel',
+                    style: 'cancel',
+                  },
+                ],
+                {cancelable: false},
+              )
+        }
     }
 
     onRegionChange = (region) => {
@@ -123,8 +154,8 @@ class AddressScreen extends Component {
                     <Text style={styles.heading}>2/4</Text>
                 </View>
 
-                <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
-                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <ScrollView contentContainerStyle={{justifyContent: 'space-between'}}>
+                    <View style={{width: '100%', height: '140%', justifyContent: 'center', alignItems: 'center'}}>
                         <MapView
                             style={styles.mapContainer}
                             region={this.state.region}
@@ -137,7 +168,7 @@ class AddressScreen extends Component {
                             />
                         </View>
                     </View>
-                    <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}>
+                    <KeyboardAvoidingView style={{flex:1}} behavior="position" enabled keyboardVerticalOffset={0}>
                         <View style={styles.commentContainer}>
                             <Text style={styles.label}>Adres</Text>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -182,7 +213,7 @@ class AddressScreen extends Component {
                         <Text style={styles.buttonText}>Volgende</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{flex:1, display: this.state.loadingLocation, position: 'absolute', justifyContent:'space-around', alignItems: 'center', width: '100%', height: '100%', backgroundColor: '#FFF', opacity: 0.5}} >
+                <View style={{flex:1, display: this.state.loadingDisplay, position: 'absolute', justifyContent:'space-around', alignItems: 'center', width: '100%', height: '100%', backgroundColor: '#FFF', opacity: 0.5}} >
                     <ActivityIndicator animating={true} size="large" color="#000" />
                 </View>
             </View>
@@ -238,7 +269,7 @@ const styles = EStyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
         width: '100%',
-        height: '40%',
+        height: '100%',
     },
     heading: {
         paddingBottom: 8,
