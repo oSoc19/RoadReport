@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert, AsyncStorage} from 'react-native'
+import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert, AsyncStorage, ActivityIndicator} from 'react-native'
 
 //modules
 import EStyleSheet from 'react-native-extended-stylesheet'
@@ -20,17 +20,40 @@ class CommentScreen extends Component {
             lat: "",
             lng: "",
             photo: "",
+            loadingDisplay: "none"
+        }
+    }
+
+    toggleLoadingAnimation = () => {
+        if(this.state.loadingDisplay == "none") {
+            this.setState({
+                loadingDisplay: "flex"
+            })
+        }else {
+            this.setState({
+                loadingDisplay: "none"
+            })
         }
     }
 
     postToApi = async() => {
+
+        this.toggleLoadingAnimation()
+
         await this._retrieveData()
         const url = "https://tmaas.m-leroy.pro/problem/send"
-        const file = {
-            uri: this.state.photo,
-            name: 'reported picture',
-            type: 'image/jpeg'
+
+        let file = ""
+        if(this.state.photo != null) {
+            file = {
+                uri: this.state.photo,
+                name: 'reported picture',
+                type: 'image/jpeg'
+            }
         }
+        else
+            file = ""
+
         let formData = new FormData()
 
         /*if(this.state.problem == "" || this.state.street == "" || this.state.city == "" || this.state.street == "") {
@@ -70,21 +93,37 @@ class CommentScreen extends Component {
 
         //}
             
-            await fetch(url, {
+            fetch(url, {
                 method: 'POST',
                 body: formData,
                 headers:{
                 'Content-Type': 'multipart/form-data'
                 }
             })
-            .then(res => console.log(res))
-            .then(async(response) => await this.setState({
-                status: response
-            }))
-            .then(console.log(this.state.status))
+            .then(res => res.json())
+            .then(json => this.setState({
+                status: json
+            }, () => {console.log(this.state.status)}))
+            .then(() => this.toggleLoadingAnimation())
+            .then(() => {
+                if(this.state.status.result == "success"){ 
+                    Actions.completed() 
+                }
+                else {
+                    Alert.alert(
+                    'Oeps! Er ging iets mis!',
+                    'Probeer het opnieuw.',
+                    [
+                    {
+                        text: 'Cancel',
+                        style: 'cancel',
+                    },
+                    ],
+                    {cancelable: false},
+                    )
+                }
+            })
             .catch(error => console.error('Error:', error))
-
-            Actions.completed()
         }
     //}
 
@@ -164,6 +203,10 @@ class CommentScreen extends Component {
                     <TouchableOpacity style={styles.submitButton} onPress={this.postToApi}>
                         <Text style={styles.buttonText}>Verzend</Text>
                     </TouchableOpacity>
+                </View>
+
+                <View style={{flex:1, display: this.state.loadingDisplay, position: 'absolute', justifyContent:'space-around', alignItems: 'center', width: '100%', height: '100%', backgroundColor: '#FFF', opacity: 0.5}} >
+                    <ActivityIndicator animating={true} size="large" color="#000" />
                 </View>
 
             </View>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, TextInput, Text, TouchableOpacity, Alert, Image, AsyncStorage} from 'react-native'
+import { View, TextInput, Text, TouchableOpacity, Alert, Image, AsyncStorage, ActivityIndicator} from 'react-native'
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 
@@ -12,6 +12,7 @@ class PhotoScreen extends Component {
         super(props);
         this.state = {
             hasCameraPermission: null,
+            loadingDisplay: "none",
             type: Camera.Constants.Type.back,
             photo: {
                 uri: null,
@@ -38,7 +39,7 @@ class PhotoScreen extends Component {
         try {
             if(this.state.photo.uri != null)
                 AsyncStorage.setItem(Storage.PHOTO, this.state.photo.uri)
-            else
+            else(this.state.photo.uri == null)
                 AsyncStorage.setItem(Storage.PHOTO, "")
         } catch (error) {
             console.log(error)
@@ -49,20 +50,48 @@ class PhotoScreen extends Component {
         this.camera = camera;
     }
 
-    snap = () => {
-        if (this.camera) {
-            const options = { quality: 0.01, base64: false, fixOrientation: true, exif: true, skipProcessing: false};
-            this.camera.takePictureAsync(options)
-                .then(photo => {
-                    photo.exif.Orientation = 1;
-                    this.setState({
-                        photo: {
-                            uri: photo.uri,
-                            display: "flex",
-                        }
-                    })
-                });     
+    toggleLoadingAnimation = () => {
+        if(this.state.loadingDisplay == "none") {
+            this.setState({
+                loadingDisplay: "flex"
+            })
+        }else {
+            this.setState({
+                loadingDisplay: "none"
+            })
         }
+    }
+
+    snap = () => {
+        if(this.state.hasCameraPermission) {
+            this.toggleLoadingAnimation()
+            if (this.camera) {
+                const options = { quality: 0.01, base64: false, fixOrientation: true, exif: true, skipProcessing: false};
+                this.camera.takePictureAsync(options)
+                    .then(photo => {
+                        photo.exif.Orientation = 1;
+                        this.setState({
+                            photo: {
+                                uri: photo.uri,
+                                display: "flex",
+                            }
+                        }, this.toggleLoadingAnimation())
+                    });     
+            }
+        } else {
+            Alert.alert(
+                'Geen toestemming tot camera',
+                'Ga naar je instellingen en sta gebruik van de camera toe bij gebruik van deze app.',
+                [
+                  {
+                    text: 'Cancel',
+                    style: 'cancel',
+                  },
+                ],
+                {cancelable: false},
+            );
+        }
+        
     }
 
     tryAgain = () => {
@@ -75,59 +104,52 @@ class PhotoScreen extends Component {
     }
 
     render() {
-        const { hasCameraPermission } = this.state;
+        return (
+        <View style={{ flex: 1 }}>
+            <View style={styles.header}>
+                <Text style={styles.heading}>Maak een foto</Text>
+                <Text style={styles.heading}>3/4</Text>
+            </View>
+            {this.state.hasCameraPermission ? <Camera ref={this.handleCameraRef} style={{ flex: 1, flexDirection: "column", justifyContent: "flex-end", alignItems: 'center' }} type={this.state.type}/>: <View style={{flex: 1, backgroundColor: '#000'}} /> }
+            
 
-        if (hasCameraPermission === null) {
-          return <View />;
-        } else if (hasCameraPermission === false) {
-          return <Text>No access to camera</Text>;
-        } else {
-          return (
-            <View style={{ flex: 1 }}>
-                <View style={styles.header}>
-                    <Text style={styles.heading}>Maak een foto</Text>
-                    <Text style={styles.heading}>3/4</Text>
-                </View>
-
-                <Camera ref={this.handleCameraRef} style={{ flex: 1, flexDirection: "column", justifyContent: "flex-end", alignItems: 'center' }} type={this.state.type}>
-
-                    <View style={{alignItems: 'center', alignSelf: 'center', width: '100%', backgroundColor: 'white', paddingTop: 11}}>
-                        <TouchableOpacity style={styles.trigger__outer} onPress={this.snap}>
-                            <View style={styles.trigger__inner}>
-                                <Image 
-                                    style={{width: '70%', height: '70%', alignSelf: 'center'}} 
-                                    resizeMode="contain"
-                                    source={require("../assets/camera_icon.png")}
-                                />
-                            </View>
-                        </TouchableOpacity>
-
-                        <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: '5%', paddingRight: '5%'}}>
-                            <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
-                                <Text style={styles.buttonText}>Terug</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.submitButton} onPress={this.goNext}>
-                                <Text style={styles.buttonText}>Overslaan</Text>
-                            </TouchableOpacity>
+                <View style={{alignItems: 'center', alignSelf: 'center', width: '100%', backgroundColor: 'white', paddingTop: 11}}>
+                    <TouchableOpacity style={styles.trigger__outer} onPress={this.snap}>
+                        <View style={styles.trigger__inner}>
+                            <Image 
+                                style={{width: '70%', height: '70%', alignSelf: 'center'}} 
+                                resizeMode="contain"
+                                source={require("../assets/camera_icon.png")}
+                            />
                         </View>
-                    </View>
-                </Camera>
-                <View style={{flex:1, display: this.state.photo.display, position: 'absolute', flexDirection: 'column',alignItems: 'flex-end', width: '100%', height: '100%', zIndex: 2, backgroundColor: '#000'}} >
-                    <View style={{position: 'absolute' , bottom: 0, width: '100%', flexDirection: 'row', alignItems: 'center',justifyContent: 'space-between', paddingLeft: '5%', paddingRight: '5%', zIndex: 5}}>
-                        <TouchableOpacity style={styles.backButton} onPress={this.tryAgain}>
-                            <Text style={styles.buttonText}>Opnieuw</Text>
+                    </TouchableOpacity>
+
+                    <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: '5%', paddingRight: '5%'}}>
+                        <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
+                            <Text style={styles.buttonText}>Terug</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.submitButton} onPress={this.goNext}>
-                            <Text style={styles.buttonText}>Volgende</Text>
+                            <Text style={styles.buttonText}>Overslaan</Text>
                         </TouchableOpacity>
                     </View>
-                    <Image style={{width: '100%', height: '100%', zIndex: 2}} resizeMode="contain"  source={{uri: this.state.photo.uri }}/>
-                    
                 </View>
+            
+            <View style={{flex:1, display: this.state.photo.display, position: 'absolute', flexDirection: 'column',alignItems: 'flex-end', width: '100%', height: '100%', zIndex: 2, backgroundColor: '#000'}} >
+                <View style={{position: 'absolute' , bottom: 0, width: '100%', flexDirection: 'row', alignItems: 'center',justifyContent: 'space-between', paddingLeft: '5%', paddingRight: '5%', zIndex: 5}}>
+                    <TouchableOpacity style={styles.backButton} onPress={this.tryAgain}>
+                        <Text style={styles.buttonText}>Opnieuw</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.submitButton} onPress={this.goNext}>
+                        <Text style={styles.buttonText}>Volgende</Text>
+                    </TouchableOpacity>
+                </View>
+                <Image style={{width: '100%', height: '100%', zIndex: 2}} resizeMode="contain"  source={{uri: this.state.photo.uri }}/>
             </View>
-          );
-        }
-    
+            <View style={{flex:1, display: this.state.loadingDisplay, position: 'absolute', justifyContent:'space-around', alignItems: 'center', width: '100%', height: '100%', backgroundColor: '#FFF', opacity: 0.5}} >
+                <ActivityIndicator animating={true} size="large" color="#000" />
+            </View>
+        </View>
+        );
     }
 }
 
