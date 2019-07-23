@@ -24,6 +24,10 @@ class CommentScreen extends Component {
         }
     }
 
+    componentDidMount() {
+        this.lookForEmail()
+    }
+
     toggleLoadingAnimation = () => {
         if(this.state.loadingDisplay == "none") {
             this.setState({
@@ -87,7 +91,7 @@ class CommentScreen extends Component {
         .then(res => res.json())
         .then(json => this.setState({
             status: json
-        }, () => {console.log(this.state.status)}))
+        }))
         .then(() => this.toggleLoadingAnimation())
         .then(() => {
             if(this.state.status.result == "success"){ 
@@ -159,7 +163,6 @@ class CommentScreen extends Component {
     };
 
     render() {
-        this.lookForEmail()
         return (
             <View style={styles.container}>
                 <View style={styles.header}>

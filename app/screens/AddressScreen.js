@@ -28,7 +28,6 @@ class AddressScreen extends Component {
     }
 
     async componentDidMount() {
-        console.log(this.state.loadingDisplay)
         const { status } = await Permissions.askAsync(Permissions.LOCATION);
         this.setState({ hasLocationPermission: status === 'granted' });
     }
