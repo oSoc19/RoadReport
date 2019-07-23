@@ -16,12 +16,8 @@ class HomeScreen extends Component {
             comment: "",
             status: "",
             problem: "",
-            otherProblem: "",
-            street: "",
-            number: "",
-            city: "",
             category: "",
-            otherBoxDisplayState: 'none',
+            otherOther: false,
         }
     }
 
@@ -39,14 +35,29 @@ class HomeScreen extends Component {
                 {cancelable: false},
             )
         } else {
-            this._storeData()
-            Actions.address()
+            if( this.state.comment == "" && this.state.otherOther == true) {
+                Alert.alert(
+                    'Geen probleem ingevuld',
+                    'Gelieve het probleem te beschrijven.',
+                    [
+                    {
+                        text: 'Cancel',
+                        style: 'cancel',
+                    },
+                    ],
+                    {cancelable: false},
+                )
+            } else {
+                this._storeData()
+                Actions.address()
+            }
         }
     }
 
     _storeData = async () => {
         try {
             AsyncStorage.setItem(Storage.PROBLEM, this.state.problem.toString())
+            AsyncStorage.setItem(Storage.COMMENT, this.state.comment.toString())
         } catch (error) {
           console.log(error)
         }
@@ -192,16 +203,17 @@ class HomeScreen extends Component {
                             problem: event.index
                         })
                     }
-                });
+                })
 
-                if(value == 'Andere')
+                if(value == "Andere"){
                     this.setState({
-                        otherBoxDisplayState: 'flex'
+                        otherOther: true
                     })
-                else
+                } else {
                     this.setState({
-                        otherBoxDisplayState: 'none'
+                        otherOther: false
                     })
+                }
             }
 
         return (
@@ -231,18 +243,16 @@ class HomeScreen extends Component {
                                 itemCount={16}
                             />
                         </View>
-                        <View style={{display: this.state.otherBoxDisplayState, flex: 1}}>
-                            <View style={styles.commentContainer}>
-                                <Text style={styles.label}>Wat is het probleem?</Text>
-                                <TextInput
-                                    placeholder = {"Beschrijf het probleem..."}
-                                    onChangeText={(otherProblem) => this.setState({otherProblem})}
-                                    value={this.state.otherProblem}
-                                    editable = {true}
-                                    maxLength = {255}
-                                    style={styles.textInput}
-                                />
-                            </View>
+                        <View style={styles.commentContainer}>
+                            <Text style={styles.label}>Heb je meer info over het probleem?</Text>
+                            <TextInput
+                                placeholder = {"Beschrijf het probleem..."}
+                                onChangeText={(comment) => this.setState({comment})}
+                                value={this.state.comment}
+                                editable = {true}
+                                maxLength = {255}
+                                style={styles.textInput}
+                            />
                         </View>
                     </KeyboardAvoidingView>
                 </ScrollView>
