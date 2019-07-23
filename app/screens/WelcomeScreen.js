@@ -1,16 +1,36 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, Image} from 'react-native'
+import { View, Text, TouchableOpacity, Alert, NetInfo } from 'react-native'
 
 //modules
-import EStyleSheet from 'react-native-extended-stylesheet';
-import { Actions } from 'react-native-router-flux';
-import LottieView from 'lottie-react-native';
+import EStyleSheet from 'react-native-extended-stylesheet'
+import { Actions } from 'react-native-router-flux'
+import LottieView from 'lottie-react-native'
 
 class WelcomeScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
         }
+    }
+
+    goNext = () => {
+        NetInfo.getConnectionInfo().then((connectionInfo) => {
+            if(connectionInfo.type == "none") {
+                Alert.alert(
+                    'Geen netwerkconnectie',
+                    'Om een probleem te melden heb je een netwerkconnectie nodig.',
+                    [
+                      {
+                        text: 'Cancel',
+                        style: 'cancel',
+                      },
+                    ],
+                    {cancelable: false},
+                )
+            } else {
+                Actions.home()
+            }
+          });
     }
 
     render() {
@@ -30,7 +50,7 @@ class WelcomeScreen extends Component {
                 <Text style={styles.title}>ROAD REPORT</Text>
 
     
-                <TouchableOpacity onPress={() => {Actions.home()}} style={styles.submitButton}>
+                <TouchableOpacity onPress={() => this.goNext()} style={styles.submitButton}>
                     <Text style={styles.buttonText}>Meld een Probleem</Text>
                 </TouchableOpacity>
 
