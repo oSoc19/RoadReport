@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800|Roboto:100,300,400,700,900');
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    scroll-padding-top: 8vh;
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+    background-image: '../images/background.svg'
+}
+
+section {
+    padding: 5vh 5vw 0vh 5vw;
+    min-height: 93vh;
+    scroll-snap-align: start;
+}
+
+table {
+    margin: auto;
+    align-self: center;
+}
+
+td {
+    text-align: left;
+    padding: 10px;
+  }
+
+.centered {
+    padding-top: 8vh;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.first {
+    padding-top: 8vh;
+    background-color: black;
+}
+
+.second {
+    background-color: pink;
+    color: black;
+}
+
+.third {
+    background-color: black;
+}
+
+.fourth {
+    background-color: white;
+    color: black;
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        scroll-snap-type: none;
+    }
+
+    .centered {
+        padding-top: 10vh;
+        background-color: black;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+}
