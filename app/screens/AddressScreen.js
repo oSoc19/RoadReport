@@ -186,6 +186,7 @@ class AddressScreen extends Component {
                             <Text style={styles.label}>Adres</Text>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                                 <TextInput
+                                    returnKeyType='done'
                                     placeholder = {"Straat"}
                                     onChangeText={(street) => this.setState({street})}
                                     value={this.state.street}
@@ -194,6 +195,7 @@ class AddressScreen extends Component {
                                     style={styles.streetInput}
                                 />
                                 <TextInput
+                                    returnKeyType='done'
                                     keyboardType={"numeric"} 
                                     placeholder = {"Huisnummer"}
                                     onChangeText={(number) => this.setState({number})}
@@ -204,6 +206,7 @@ class AddressScreen extends Component {
                                 />
                             </View>
                             <TextInput
+                                returnKeyType='done'
                                 placeholder = {"Stad"}
                                 onChangeText={(city) => this.setState({city})}
                                 value={this.state.city}
