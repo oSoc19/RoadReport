@@ -38,15 +38,16 @@ const IndexPage = () => (
     </section>
     
     <section id="second_section" className="second">
-      <div className={indexStyle.workContainer}>
-        <WorkText 
-        title="Moodify" 
-        intro="For our Mobile Development class we needed to make a mood app. 
-        Me and my group wanted to make a mood app that's different from others, so we started brainstorming."
-        btnStyle={indexStyle.buttonBlack}
-        github="https://github.com/gdmgent-1819-mobdev2/positive-design-moodify"
-        />
-		<WebWork image1={app1} image2={app2}/>
+      <div className={indexStyle.teamContainer}>
+        <div style={{display: 'flex', flexDirection: 'row'}}>
+          <div style={{width: 300, height: 300, borderRadius: 150, backgroundColor: 'green', margin: 50}}></div>
+          <div style={{width: 300, height: 300, borderRadius: 150, backgroundColor: 'green', margin: 50}}></div>
+          <div style={{width: 300, height: 300, borderRadius: 150, backgroundColor: 'green', margin: 50}}></div>
+        </div>
+        <div style={{display: 'flex', flexDirection: 'row'}}>
+          <div style={{width: 300, height: 300, borderRadius: 150, backgroundColor: 'green', margin: 50}}></div>
+          <div style={{width: 300, height: 300, borderRadius: 150, backgroundColor: 'green', margin: 50}}></div>
+        </div>
       </div>
     </section>
   </Layout>

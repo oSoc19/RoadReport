@@ -60,6 +60,14 @@
     background-color: '#FFF'
 }
 
+.teamContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: '#FFF';
+    align-items: center;
+}
+
 .buttonWhite {
     padding: 10px 12px;
     text-decoration: none;
