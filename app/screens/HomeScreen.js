@@ -246,7 +246,7 @@ class HomeScreen extends Component {
                         <View style={styles.commentContainer}>
                             <Text style={styles.label}>Heb je meer info over het probleem?</Text>
                             <TextInput
-                            returnKeyType='done'
+                                returnKeyType='done'
                                 placeholder = {"Beschrijf het probleem..."}
                                 onChangeText={(comment) => this.setState({comment})}
                                 value={this.state.comment}
