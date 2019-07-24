@@ -177,6 +177,7 @@ class CommentScreen extends Component {
                             <View style={styles.commentContainer}>
                                 <Text style={styles.label}>Laat je Email achter als je updates over het probleem wilt ontvangen</Text>
                                 <TextInput
+                                    returnKeyType='done'
                                     placeholder = {"Email"}
                                     onChangeText={(email) => this.setState({email})}
                                     value={this.state.email}
