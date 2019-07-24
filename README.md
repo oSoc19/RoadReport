@@ -54,6 +54,12 @@ Expo start
 ```
 
 # Usage
-
-![alt text](https://github.com/oSoc19/RoadReport/blob/feature/localstorage/assets/IMG_1582.PNG =414x896)
-<img src="https://github.com/oSoc19/RoadReport/blob/feature/localstorage/assets/IMG_1582.PNG" alt="drawing" width="414"/>
+<div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between">
+    <img src="https://github.com/oSoc19/RoadReport/blob/feature/localstorage/assets/IMG_1582.PNG" alt="WelcomeScreen" width="207"/>
+    <img src="https://github.com/oSoc19/RoadReport/blob/feature/localstorage/assets/IMG_1596.PNG" alt="ProblemScreen" width="207"/>
+    <img src="https://github.com/oSoc19/RoadReport/blob/feature/localstorage/assets/IMG_1584.PNG" alt="AddressScreen" width="207"/>
+    <img src="https://github.com/oSoc19/RoadReport/blob/feature/localstorage/assets/IMG_1595.PNG" alt="PhotoScreen" width="207"/>
+    <img src="https://github.com/oSoc19/RoadReport/blob/feature/localstorage/assets/IMG_1598.PNG" alt="PhotoReviewScreen" width="207"/>
+    <img src="https://github.com/oSoc19/RoadReport/blob/feature/localstorage/assets/IMG_1597.PNG" alt="EmailScreen" width="207"/>
+    <img src="https://github.com/oSoc19/RoadReport/blob/feature/localstorage/assets/IMG_1588.PNG" alt="FinishScreen" width="207"/>
+</div>
