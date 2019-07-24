@@ -56,3 +56,4 @@ Expo start
 # Usage
 
 ![alt text](https://github.com/oSoc19/RoadReport/blob/feature/localstorage/assets/IMG_1582.PNG =414x896)
+<img src="https://github.com/oSoc19/RoadReport/blob/feature/localstorage/assets/IMG_1582.PNG" alt="drawing" width="414"/>
