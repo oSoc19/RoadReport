@@ -81,7 +81,7 @@ Expo start
 * The API sometimes doesn't give the expected result (like in Brussel, Brussel won't get filled in in the city field)
 * Address screen needs to be redesigned, UX problems
 * Add a screen where you can add multiple pictures, also from your library
-* Code needs to get refactored. This code was written to be fast, so there where no custom components used, etc.
+* Code needs to get refactored. This code needed to written fast, so there where no custom components used, etc.
 
 # Contributing
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are greatly appreciated.
