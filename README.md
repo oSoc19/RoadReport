@@ -18,6 +18,8 @@ In this way citizens support the city to discover problems at an early stage, so
 
 Road Report is a project of [TMaaS](https://drive.tmaas.eu), built by [The Guardians of the Road](https://2019.summerofcode.be/2019/road-report) at [Open Summer of Code 2019](https://2019.summerofcode.be/).
 
+This repo is for the frontend of the project, for the backend go to [Road Report Backend](https://github.com/oSoc19/RoadReport-backend)
+
 ## Built with
 * [React Native](https://facebook.github.io/react-native/)
 * [Expo](https://expo.io/)
@@ -63,3 +65,32 @@ Expo start
     <img src="https://github.com/oSoc19/RoadReport/blob/feature/localstorage/assets/IMG_1597.PNG" alt="EmailScreen" width="207"/>
     <img src="https://github.com/oSoc19/RoadReport/blob/feature/localstorage/assets/IMG_1588.PNG" alt="FinishScreen" width="207"/>
 </div>
+
+# Roadmap
+* IOS
+    - No known bugs
+
+* Android
+    - When going into the AddressScreen the loadingscreen immediatly appears and doesn't go away
+    - Once tested the app and the phone got hot
+
+# Contributing
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are greatly appreciated.
+
+1. Fork the Project
+2. Create your Feature Branch (git checkout -b feature/AmazingFeature)
+3. Commit your Changes (git commit -m 'Add some AmazingFeature')
+4. Push to the Branch (git push origin feature/AmazingFeature)
+5. Open a Pull Request
+
+# License
+Distributed under the MIT License. See `LICENSE` for more information.
+
+# Contact
+
+info@osoc.be
+
+Project link : https://github.com/oSoc19/RoadReport
+
+
+
