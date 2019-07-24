@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, Alert, NetInfo, Image } from 'react-native'
+import { View, Text, TouchableOpacity, Alert, NetInfo } from 'react-native'
 
 //modules
 import EStyleSheet from 'react-native-extended-stylesheet'
@@ -36,10 +36,18 @@ class WelcomeScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View>
-                    <Text style={styles.title}>ROAD</Text>
-                    <Text style={styles.title}>REPORT</Text>
-                </View>
+
+                <LottieView style={{
+                    flex:1,
+                    zIndex: 0,
+                    }}
+                    source={require('../assets/animations/intro.json')} 
+                    resizeMode="cover"
+                    autoPlay 
+                    loop 
+                />
+
+                <Text style={styles.title}>ROAD REPORT</Text>
 
     
                 <TouchableOpacity onPress={() => this.goNext()} style={styles.submitButton}>
@@ -47,13 +55,10 @@ class WelcomeScreen extends Component {
                 </TouchableOpacity>
 
                 <View style={{width: '70%', alignItems: 'center'}}>
-                    <Text style={styles.message}>Rapportering voor fietsers en wandelaars. Maak Gent een betere plek!</Text>
+                    <Text style={styles.message}>Ondervond u een probleem met een voet- of fietspad?</Text>
+                    <Text style={styles.message}>Meld het! We zullen dit nakijken en actie ondernemen indien nodig.</Text>
                 </View>
-                {/*<Image
-                style={{width: '50%', position: 'absolute', alignSelf: 'center', bottom: 20}}
-                source={require('../assets/icon.png')}
-                resizeMode={'contain'}
-                />*/}
+
             </View>
         );
     }
@@ -65,16 +70,15 @@ const styles = EStyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         backgroundColor: '#FFF',
     },
     submitButton: {
+        marginTop: 230,
         width: '90%',
         height: 60,
-        marginTop: 40,
-        marginBottom: 40,
         borderRadius: 6,
-        backgroundColor: '#8786c0', 
+        backgroundColor: '#2594d9', 
         alignItems: 'center',
         justifyContent: 'space-around',
         alignSelf: 'center',
@@ -91,19 +95,20 @@ const styles = EStyleSheet.create({
         width: '80%',
     },
     message: {
-        fontSize: 22,
+        fontSize: 16,
         width: '90%',
         textAlign: 'center',
-        color: '#444',
+        marginTop: 20,
+        color: 'white',
         fontFamily: '$openSansRegular',
     },
     title: {
-        fontSize: 54,
+        fontSize: 44,
         width: '90%',
         textAlign: 'center',
-        alignSelf: 'center',
+        marginTop: 60,
         fontFamily: '$openSansExtrabold',
-        color: '#8786c0',
+        color: 'white',
     }
 
 });

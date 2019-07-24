@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, AsyncStorage, Alert} from 'react-native'
+import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, AsyncStorage, Alert, Picker} from 'react-native'
 
 import { t } from '../localization/Localization';
 //modules
@@ -196,25 +196,25 @@ class HomeScreen extends Component {
             
             }
 
-            setProblem = (value) => {
-                events.forEach(event => {
-                    if(event.value == value) {
-                        this.setState({
-                            problem: event.index
-                        })
-                    }
-                })
-
-                if(value == "Andere"){
+        setProblem = (value) => {
+            events.forEach(event => {
+                if(event.value == value) {
                     this.setState({
-                        otherOther: true
-                    })
-                } else {
-                    this.setState({
-                        otherOther: false
+                        problem: event.index
                     })
                 }
+            })
+
+            if(value == "Andere"){
+                this.setState({
+                    otherOther: true
+                })
+            } else {
+                this.setState({
+                    otherOther: false
+                })
             }
+        }
 
         return (
             <View style={styles.container}>
@@ -224,21 +224,21 @@ class HomeScreen extends Component {
                 </View>
                 <ScrollView contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
                     <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled keyboardVerticalOffset={0}> 
-                        <View style={styles.commentContainer}>
-                            <Text style={styles.label}>Kies een probleem uit de lijst</Text>
+                    <Text style={styles.label}>Selecteer het onderwerp</Text>
+                            <View style={styles.commentContainer}>
                             <Dropdown
                                 onChangeText={(value) => this.setState({category: value})}
                                 baseColor={"#0A0A0A"}
                                 labelFontSize={18}
-                                label='Categorie'
                                 data={categories}
                                 itemCount={16}
                             />
+                            </View>
+                            <View style={styles.commentContainer}>
                             <Dropdown
                                 onChangeText={(value) => {setProblem(value)}}
                                 baseColor={"#0A0A0A"}
                                 labelFontSize={18}
-                                label='Probleem'
                                 data={events}
                                 itemCount={16}
                             />
@@ -246,6 +246,7 @@ class HomeScreen extends Component {
                         <View style={styles.commentContainer}>
                             <Text style={styles.label}>Heb je meer info over het probleem?</Text>
                             <TextInput
+                            returnKeyType='done'
                                 placeholder = {"Beschrijf het probleem..."}
                                 onChangeText={(comment) => this.setState({comment})}
                                 value={this.state.comment}
@@ -289,7 +290,7 @@ const styles = EStyleSheet.create({
     },
     commentContainer: {
         backgroundColor: 'white',
-        marginTop: 20,
+        marginTop: 10,
         padding: 14,
         flexDirection: 'column',
         alignSelf: 'center',
@@ -358,8 +359,11 @@ const styles = EStyleSheet.create({
         fontFamily: '$openSansBold',
     },
     label: {
+        width: '90%',
+        alignSelf: 'center',
         fontFamily: '$openSansSemibold',
-        fontSize: 20, 
+        fontSize: 20,
+        marginTop: 20,
     }
 
 });
