@@ -6,10 +6,10 @@
     - [Installation](#installation)
 * [Usage](#usage)
 * [Roadmap](#roadmap)
+* [TODO's](#todos)
 * [Contributing](#contributing)
 * [License](#license)
 * [Contact](#contact)
-* [Acknowledgements](#acknowledgements)
 
 # About the project
 With Road Report, cyclists and pedestrians can easily report problems they encounter on the road. For example, broken bike paths, holes in the road or loose cobblestones.
@@ -23,6 +23,7 @@ This repo is for the frontend of the project, for the backend go to [Road Report
 ## Built with
 * [React Native](https://facebook.github.io/react-native/)
 * [Expo](https://expo.io/)
+* [Best Addresses](https://github.com/oSoc19/best) (API for geocoding, autocomplete, ...)
 
 # Getting started
 ## Prerequisites
@@ -73,6 +74,14 @@ Expo start
 * Android
     - When going into the AddressScreen the loadingscreen immediatly appears and doesn't go away
     - Once tested the app and the phone got hot
+
+# TODO's
+* UI needs to improve overall, next button placement, etc.
+* Screen where you choose the problem needs to be more accessible
+* The API sometimes doesn't give the expected result (like in Brussel, Brussel won't get filled in in the city field)
+* Address screen needs to be redesigned, UX problems
+* Add a screen where you can add multiple pictures, also from your library
+* Code needs to get refactored. This code was written to be fast, so there where no custom components used, etc.
 
 # Contributing
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are greatly appreciated.
