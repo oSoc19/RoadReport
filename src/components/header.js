@@ -9,7 +9,7 @@ export default() => (
     <Link className={headerStyles.linklogo} to="/"> <h1 className={headerStyles.logo}>ROAD REPORT</h1> </Link>
       <div className={headerStyles.linkContainer}>
         <Link className={headerStyles.link} to="#team">Team</Link>
-        <Link className={headerStyles.link} to="#partners">Partners</Link>
+        <a className={headerStyles.link} href="https://drive.tmaas.eu/nl/">Partners</a>
       </div>
     </div>
   </header>
