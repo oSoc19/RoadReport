@@ -74,6 +74,8 @@ class HomeScreen extends Component {
             },{
             value: 'Fietsinfrastructuur',
             },{
+            value: 'Straatverlichting defect',
+            },{
             value: 'Andere',
             },];
 
@@ -166,6 +168,30 @@ class HomeScreen extends Component {
                     }, {
                     value: 'Fietslichtjes automaat leeg/kapot',
                     index: 24
+                    },];
+                break;
+            case 'Straatverlichting defect':
+                events = [{
+                    value: 'Lamp defect',
+                    index: 31
+                    }, {
+                    value: 'Lamp blijft branden',
+                    index: 32
+                    }, {
+                    value: 'Lamp knippert',
+                    index: 33
+                    },{
+                    value: 'Meerdere lampen blijven branden',
+                    index: 34
+                    },{
+                    value: '4 of meer opeenvolgende lampen defect',
+                    index: 35
+                    },{
+                    value: 'Volledige straat zonder verlichting',
+                    index: 36
+                    },{
+                    value: 'Ander defect',
+                    index: 37
                     },];
                 break;
 
