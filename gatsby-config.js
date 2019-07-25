@@ -1,5 +1,5 @@
 module.exports = {
-  pathPrefix: "/RoadReport",
+  pathPrefix: "",
   siteMetadata: {
     title: `Road Report`,
     description: `Project page of the Road Report project`,

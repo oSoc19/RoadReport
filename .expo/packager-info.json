@@ -1,0 +1,9 @@
+{
+  "devToolsPort": 19002,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": "https://s6-frs.wouterwouters.tmaas-app.exp.direct",
+  "packagerNgrokUrl": "https://packager.s6-frs.wouterwouters.tmaas-app.exp.direct",
+  "ngrokPid": 33886
+}
