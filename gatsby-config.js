@@ -1,10 +1,10 @@
 module.exports = {
-  pathPrefix: "/portfolio",
+  pathPrefix: "/RoadReport",
   siteMetadata: {
-    title: `Jan Temmerman`,
-    description: `Portfolio website of Jan Temmerman`,
+    title: `Road Report`,
+    description: `Project page of the Road Report project`,
     author: `@jantemmerman`,
-    siteUrl: `https://www.jantemmerman.ga`,
+    siteUrl: `https://osoc19.github.io/RoadReport/`,
   },
   plugins: [`gatsby-plugin-sitemap`],
   plugins: [
@@ -12,7 +12,6 @@ module.exports = {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         // replace "UA-XXXXXXXXX-X" with your own Tracking ID
-        trackingId: "UA-139325644-1",
       },
     },
   ],
